@@ -8,3 +8,4 @@ coverage/
 !.env.example
 README.md 
 SAAS_PLATFORM_SPECIFICATION.md
+git add README.md
