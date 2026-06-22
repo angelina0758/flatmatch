@@ -1,0 +1,8 @@
+{
+  "name": "FlatMatch",
+  "description": "Roommate & Apartment Finder SaaS Platform with compatibility matching, interactive geographic filtering, bulk owner dashboard, in-app messaging, and AI compatibility breakdown.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

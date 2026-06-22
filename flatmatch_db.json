@@ -1,0 +1,738 @@
+{
+  "users": {
+    "user-seeker-1": {
+      "id": "user-seeker-1",
+      "email": "seeker.alex@example.com",
+      "password": "password123",
+      "full_name": "Alex Johnson",
+      "user_type": "seeker",
+      "phone_number": "+1 (555) 123-4567",
+      "is_verified": true,
+      "tier": "premium_seeker",
+      "created_at": "2026-05-23T15:20:47.894Z"
+    },
+    "user-seeker-2": {
+      "id": "user-seeker-2",
+      "email": "seeker.rahul@example.com",
+      "password": "password123",
+      "full_name": "Rahul Nair",
+      "user_type": "seeker",
+      "phone_number": "+91 94470 11223",
+      "is_verified": true,
+      "tier": "premium_seeker",
+      "created_at": "2026-06-17T15:20:47.898Z"
+    },
+    "user-seeker-3": {
+      "id": "user-seeker-3",
+      "email": "seeker.anjali@example.com",
+      "password": "password123",
+      "full_name": "Anjali Menon",
+      "user_type": "seeker",
+      "phone_number": "+91 94950 44556",
+      "is_verified": true,
+      "tier": "premium_seeker",
+      "created_at": "2026-06-18T15:20:47.898Z"
+    },
+    "user-seeker-4": {
+      "id": "user-seeker-4",
+      "email": "seeker.fahad@example.com",
+      "password": "password123",
+      "full_name": "Fahad Fazal",
+      "user_type": "seeker",
+      "phone_number": "+91 98450 77889",
+      "is_verified": true,
+      "tier": "free",
+      "created_at": "2026-06-19T15:20:47.898Z"
+    },
+    "user-tenant-1": {
+      "id": "user-tenant-1",
+      "email": "tenant.clara@example.com",
+      "password": "password123",
+      "full_name": "Clara Mendoza",
+      "user_type": "tenant",
+      "phone_number": "+1 (555) 987-6543",
+      "is_verified": true,
+      "tier": "free",
+      "created_at": "2026-06-07T15:20:47.898Z"
+    },
+    "user-tenant-2": {
+      "id": "user-tenant-2",
+      "email": "tenant.dave@example.com",
+      "password": "password123",
+      "full_name": "Dave Chen",
+      "user_type": "tenant",
+      "phone_number": "+1 (555) 246-8101",
+      "is_verified": false,
+      "tier": "free",
+      "created_at": "2026-06-12T15:20:47.898Z"
+    },
+    "user-tenant-3": {
+      "id": "user-tenant-3",
+      "email": "tenant.gautham@example.com",
+      "password": "password123",
+      "full_name": "Gautham Krishna",
+      "user_type": "tenant",
+      "phone_number": "+91 95620 99001",
+      "is_verified": true,
+      "tier": "free",
+      "created_at": "2026-06-10T15:20:47.898Z"
+    },
+    "user-tenant-4": {
+      "id": "user-tenant-4",
+      "email": "tenant.riya@example.com",
+      "password": "password123",
+      "full_name": "Riya George",
+      "user_type": "tenant",
+      "phone_number": "+91 97440 22334",
+      "is_verified": true,
+      "tier": "free",
+      "created_at": "2026-06-11T15:20:47.898Z"
+    },
+    "user-tenant-5": {
+      "id": "user-tenant-5",
+      "email": "tenant.nidhin@example.com",
+      "password": "password123",
+      "full_name": "Nidhin Joseph",
+      "user_type": "tenant",
+      "phone_number": "+91 99950 55667",
+      "is_verified": true,
+      "tier": "free",
+      "created_at": "2026-06-12T15:20:47.898Z"
+    },
+    "user-owner-1": {
+      "id": "user-owner-1",
+      "email": "owner.marcus@example.com",
+      "password": "password123",
+      "full_name": "Marcus Sterling Properties",
+      "user_type": "owner",
+      "phone_number": "+1 (555) 369-1215",
+      "is_verified": true,
+      "tier": "owner_pro",
+      "created_at": "2026-04-23T15:20:47.898Z"
+    },
+    "user-owner-2": {
+      "id": "user-owner-2",
+      "email": "owner.malabar@example.com",
+      "password": "password123",
+      "full_name": "Malabar Developers Kochi",
+      "user_type": "owner",
+      "phone_number": "+91 484 2334455",
+      "is_verified": true,
+      "tier": "owner_pro",
+      "created_at": "2026-05-13T15:20:47.898Z"
+    },
+    "user-owner-3": {
+      "id": "user-owner-3",
+      "email": "owner.travancore@example.com",
+      "password": "password123",
+      "full_name": "Travancore Builders Trivandrum",
+      "user_type": "owner",
+      "phone_number": "+91 471 2722822",
+      "is_verified": true,
+      "tier": "owner_pro",
+      "created_at": "2026-05-18T15:20:47.898Z"
+    },
+    "user-owner-4": {
+      "id": "user-owner-4",
+      "email": "owner.calicut@example.com",
+      "password": "password123",
+      "full_name": "Calicut Landmark Realty",
+      "user_type": "owner",
+      "phone_number": "+91 495 2445566",
+      "is_verified": true,
+      "tier": "owner_pro",
+      "created_at": "2026-05-23T15:20:47.898Z"
+    },
+    "user-owner-5": {
+      "id": "user-owner-5",
+      "email": "owner.kalyan@example.com",
+      "password": "password123",
+      "full_name": "Kalyan Crest Group Thrissur",
+      "user_type": "owner",
+      "phone_number": "+91 487 2331122",
+      "is_verified": true,
+      "tier": "owner_pro",
+      "created_at": "2026-05-28T15:20:47.898Z"
+    },
+    "user-owner-6": {
+      "id": "user-owner-6",
+      "email": "owner.vembanad@example.com",
+      "password": "password123",
+      "full_name": "Vembanad Lakeside Residency",
+      "user_type": "owner",
+      "phone_number": "+91 477 2211334",
+      "is_verified": true,
+      "tier": "owner_pro",
+      "created_at": "2026-06-02T15:20:47.898Z"
+    }
+  },
+  "profiles": {
+    "user-seeker-1": {
+      "user_id": "user-seeker-1",
+      "bio": "Software developer working in tech. I work hybrid (mostly 3 days home, 2 days office). Clean, quiet, and friendly. I enjoy cooking Italian dishes, watching football, and hiking on weekends. Looking to move into a bright room with flatmates who appreciate cleanliness and occasional shared meals.",
+      "age": 26,
+      "gender": "Male",
+      "profession": "Software Engineer",
+      "smoker": false,
+      "pets_allowed": true,
+      "cleanliness_level": 4,
+      "budget_min": 700,
+      "budget_max": 1300,
+      "drinking": "socially",
+      "sleeping_pattern": "early_bird",
+      "wfh_status": "hybrid"
+    },
+    "user-seeker-2": {
+      "user_id": "user-seeker-2",
+      "bio": "Working professional software engineer based at Kakkanad Infopark. Very systematic, neat, loves filter coffee and late evening tea. Looking for a neat flatmate to share a flat or split a flat in Kochi.",
+      "age": 25,
+      "gender": "Male",
+      "profession": "Software Engineer",
+      "smoker": false,
+      "pets_allowed": true,
+      "cleanliness_level": 4,
+      "budget_min": 8000,
+      "budget_max": 18000,
+      "drinking": "never",
+      "sleeping_pattern": "early_bird",
+      "wfh_status": "hybrid"
+    },
+    "user-seeker-3": {
+      "user_id": "user-seeker-3",
+      "bio": "Digital designer and local content creator. Very active lifestyle, loves movies, exploring food joints around Thiruvananthapuram. Non-smoker, friendly with pets.",
+      "age": 24,
+      "gender": "Female",
+      "profession": "Content Creator",
+      "smoker": false,
+      "pets_allowed": true,
+      "cleanliness_level": 3,
+      "budget_min": 10000,
+      "budget_max": 20000,
+      "drinking": "socially",
+      "sleeping_pattern": "flexible",
+      "wfh_status": "wfh"
+    },
+    "user-seeker-4": {
+      "user_id": "user-seeker-4",
+      "bio": "Digital marketing manager stationed in Calicut / Kozhikode. Enjoys deep discussions, occasional beach walks, and light music. Open to smoking and very chill habits.",
+      "age": 27,
+      "gender": "Male",
+      "profession": "Digital Marketer",
+      "smoker": true,
+      "pets_allowed": false,
+      "cleanliness_level": 3,
+      "budget_min": 8000,
+      "budget_max": 15000,
+      "drinking": "socially",
+      "sleeping_pattern": "night_owl",
+      "wfh_status": "hybrid"
+    },
+    "user-tenant-1": {
+      "user_id": "user-tenant-1",
+      "bio": "Graphic Designer who loves plants and books! Living in a gorgeous 2BHK in Brooklyn. I have a spacious spare bedroom with its own ensuite bathroom. Looking for an open-minded, clean flatmate. I respect private space, but am always down for a glass of wine or tea and chatting about movies.",
+      "age": 28,
+      "gender": "Female",
+      "profession": "Graphic Designer",
+      "smoker": false,
+      "pets_allowed": true,
+      "cleanliness_level": 4,
+      "budget_min": 900,
+      "budget_max": 1500,
+      "drinking": "socially",
+      "sleeping_pattern": "flexible",
+      "wfh_status": "wfh"
+    },
+    "user-tenant-2": {
+      "user_id": "user-tenant-2",
+      "bio": "Medical resident at the local hospital. Usually work long hours, so sleeping patterns can be a bit nocturnal. Love to host quiet dinners now and then, but mostly need a quiet, low-key space to rest and unwind. Cleanliness is highly valued!",
+      "age": 30,
+      "gender": "Male",
+      "profession": "Medical Resident",
+      "smoker": false,
+      "pets_allowed": false,
+      "cleanliness_level": 5,
+      "budget_min": 1000,
+      "budget_max": 1800,
+      "drinking": "never",
+      "sleeping_pattern": "night_owl",
+      "wfh_status": "office"
+    },
+    "user-tenant-3": {
+      "user_id": "user-tenant-3",
+      "bio": "Work as an interface artist. We are currently 3 fun guys in this neat flat and looking for our 4th awesome roommate. Cleanliness is highly prioritized, and we divide bills evenly.",
+      "age": 26,
+      "gender": "Male",
+      "profession": "UI Designer",
+      "smoker": false,
+      "pets_allowed": true,
+      "cleanliness_level": 4,
+      "budget_min": 5000,
+      "budget_max": 10000,
+      "drinking": "socially",
+      "sleeping_pattern": "flexible",
+      "wfh_status": "hybrid"
+    },
+    "user-tenant-4": {
+      "user_id": "user-tenant-4",
+      "bio": "Registered nurse stationed at a reputed clinic in Trivandrum. Extremely systematic. There are currently 3 of us girls here in this cozy home. We are searching for an amicable 4th girl flatmate.",
+      "age": 25,
+      "gender": "Female",
+      "profession": "Nurse",
+      "smoker": false,
+      "pets_allowed": false,
+      "cleanliness_level": 5,
+      "budget_min": 4000,
+      "budget_max": 9000,
+      "drinking": "never",
+      "sleeping_pattern": "night_owl",
+      "wfh_status": "office"
+    },
+    "user-tenant-5": {
+      "user_id": "user-tenant-5",
+      "bio": "Sous chef working in Calicut. Enthusiastic about standard organization. Sharing with 3 people in Calicut town center. Looking for a neat companion.",
+      "age": 28,
+      "gender": "Male",
+      "profession": "Chef",
+      "smoker": false,
+      "pets_allowed": true,
+      "cleanliness_level": 4,
+      "budget_min": 5000,
+      "budget_max": 12000,
+      "drinking": "socially",
+      "sleeping_pattern": "flexible",
+      "wfh_status": "office"
+    }
+  },
+  "listings": {
+    "list-stay-1": {
+      "id": "list-stay-1",
+      "owner_id": "user-tenant-1",
+      "title": "Spacious En-suite Room in Vibrant Brooklyn 2BHK",
+      "description": "Looking for an awesome flatmate to occupy the master bedroom in a fully furnished modern 2-bedroom, 2-bathroom flat in the heart of Brooklyn. The room has high ceilings, a massive built-in wardrobe, and large East-facing windows that bring in beautiful morning light. Rest of the flat is shared with Clara, a 28yo designer.",
+      "listing_type": "shared_stay",
+      "price_per_month": 1150,
+      "deposit": 1150,
+      "address": "142 Greene Ave, Brooklyn, NY 11238",
+      "latitude": 40.6865,
+      "longitude": -73.9658,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-12T15:20:47.898Z",
+      "room_size": "14' x 16' (En-suite)",
+      "utility_split": "Split 50/50 (~₹1,500/month for high-speed fiber & electric)",
+      "current_flatmate_count": 1,
+      "gender_preference": "Girls only",
+      "house_restrictions": [
+        "No smoking indoors",
+        "No overnight partners without prior notice",
+        "Quiet hours after 11 PM"
+      ],
+      "amenities": [
+        "Gym",
+        "Security",
+        "High-speed Internet",
+        "In-unit Laundry",
+        "Rooftop Access"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-stay-2": {
+      "id": "list-stay-2",
+      "owner_id": "user-tenant-2",
+      "title": "Cozy Bedroom in Upper West Side High-rise",
+      "description": "Private room available in high-end luxury building. Extremely quiet space with gorgeous views. Sharing with Dave, a medical resident who is rarely home in the daytime. Ideal for someone who wants peace, quiet, and spotless cleanliness. There is a study desk and standard furniture provided.",
+      "listing_type": "shared_stay",
+      "price_per_month": 1400,
+      "deposit": 1000,
+      "address": "320 West 86th St, New York, NY 10024",
+      "latitude": 40.7895,
+      "longitude": -73.9795,
+      "available_from": "2026-08-01",
+      "is_active": true,
+      "created_at": "2026-06-17T15:20:47.898Z",
+      "room_size": "12' x 11'",
+      "utility_split": "All-inclusive (Wifi/AC included in rent)",
+      "current_flatmate_count": 1,
+      "gender_preference": "Boys only",
+      "house_restrictions": [
+        "Strict quiet hours",
+        "No pets allowed",
+        "Exemplary kitchen cleanup after cooking"
+      ],
+      "amenities": [
+        "Gym",
+        "Pool",
+        "Parking",
+        "Security",
+        "Doorman",
+        "Elevator"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-stay-3": {
+      "id": "list-stay-3",
+      "owner_id": "user-tenant-3",
+      "title": "Master Room in Skylark Flat - Edappally, Kochi (3 Flatmates)",
+      "description": "Looking for an awesome flatmate to join us in our flat. We are 3 working professionals already occupying the apartment. The available room is spacious, with a separate balcony and attached washroom.",
+      "listing_type": "shared_stay",
+      "price_per_month": 6500,
+      "deposit": 15000,
+      "address": "Skyline Imperial, Edappally, Kochi, Kerala 682024",
+      "latitude": 10.0261,
+      "longitude": 76.3125,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-17T15:20:47.899Z",
+      "room_size": "12' x 11'",
+      "utility_split": "Split evenly among 4 roommates",
+      "current_flatmate_count": 3,
+      "gender_preference": "Boys only",
+      "house_restrictions": [
+        "No smoking in room",
+        "No midnight heavy noise"
+      ],
+      "amenities": [
+        "High-speed Internet",
+        "Security",
+        "In-unit Laundry",
+        "Parking"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-stay-4": {
+      "id": "list-stay-4",
+      "owner_id": "user-tenant-4",
+      "title": "Cozy Shared Stay near Technopark - Trivandrum (3 Flatmates)",
+      "description": "A wonderful clean single bedroom available in our 4-bedroom villa. Currently there are 3 female working roommates. Safe residential colony with security and easy metro commuting.",
+      "listing_type": "shared_stay",
+      "price_per_month": 5500,
+      "deposit": 10000,
+      "address": "Technopark Phase 1 Road, Kazhakkoottam, Thiruvananthapuram, Kerala 695581",
+      "latitude": 8.5581,
+      "longitude": 76.8845,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-18T15:20:47.899Z",
+      "room_size": "10' x 11'",
+      "utility_split": "Split 4 ways evenly",
+      "current_flatmate_count": 3,
+      "gender_preference": "Girls only",
+      "house_restrictions": [
+        "Strict clean cleanup rules",
+        "Quiet hours after 10 PM"
+      ],
+      "amenities": [
+        "High-speed Internet",
+        "Food Included",
+        "Kitchen",
+        "Security"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-stay-5": {
+      "id": "list-stay-5",
+      "owner_id": "user-tenant-5",
+      "title": "Single Room in Beach Road Flat - Kozhikode (3 Flatmates)",
+      "description": "Private third bedroom in a spacious 4BHK flat right next to Kozhikode beach. Relaxed atmosphere, sharing with 3 chill guys. Very friendly environment.",
+      "listing_type": "shared_stay",
+      "price_per_month": 6000,
+      "deposit": 12000,
+      "address": "Beach Road near Kozhikode Beach, Kozhikode, Kerala 673001",
+      "latitude": 11.2588,
+      "longitude": 75.7804,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-19T15:20:47.899Z",
+      "room_size": "11' x 11'",
+      "utility_split": "Split all bills equally",
+      "current_flatmate_count": 3,
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "Clean your own plates immediately",
+        "Restricted commercial guests"
+      ],
+      "amenities": [
+        "Kitchen",
+        "Parking",
+        "High-speed Internet",
+        "Rooftop Access"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-unit-1": {
+      "id": "list-unit-1",
+      "owner_id": "user-owner-1",
+      "title": "Modern Premium 1BHK Studio - Midtown North",
+      "description": "Directly from building owner. Sleek, brand new renovated 1BHK unit. Built-in high-end appliances, underfloor heating, energy-efficient triple glazed windows. Ideal for young professionals or couples who want premium independent living. No broker fee, flexible lease options available.",
+      "listing_type": "entire_unit",
+      "price_per_month": 2350,
+      "deposit": 2350,
+      "address": "240 W 54th St, New York, NY 10019",
+      "latitude": 40.7638,
+      "longitude": -73.9825,
+      "available_from": "2026-07-15",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-05-28T15:20:47.899Z",
+      "apartment_type": "1BHK",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "No smoking in unit",
+        "Rent paid by 1st of month",
+        "Quiet residential unit"
+      ],
+      "amenities": [
+        "Gym",
+        "Security",
+        "Parking",
+        "Elevator",
+        "Central AC",
+        "Common Lounge"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1502672016832-47ba6e1b73c4?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-unit-2": {
+      "id": "list-unit-2",
+      "owner_id": "user-owner-1",
+      "title": "Spacious Renovated 2BHK Near Central Park",
+      "description": "Fabulous location just two avenues away from Central Park! Large family-owned 2BHK apartment with open-plan kitchen, smart lockers for parcels, and fully equipped laundry in the basement. Pet-friendly building with visual intercom and 24/7 security. Contact for viewings.",
+      "listing_type": "entire_unit",
+      "price_per_month": 3100,
+      "deposit": 3000,
+      "address": "120 Central Park West, New York, NY 10023",
+      "latitude": 40.7766,
+      "longitude": -73.9772,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "created_at": "2026-06-08T15:20:47.899Z",
+      "apartment_type": "2BHK",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "No commercial events or loud parties",
+        "Subletting strictly prohibited"
+      ],
+      "amenities": [
+        "Security",
+        "Parking",
+        "Common Lounge",
+        "Pets Allowed",
+        "Bicycle Storage"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-unit-3": {
+      "id": "list-unit-3",
+      "owner_id": "user-owner-2",
+      "title": "Luxury 3BHK Apartment - Kakkanad InfoPark Peak",
+      "description": "Direct listing from Malabar Developers. Premium high-rise 3BHK with excellent natural air Flow, premium modular cupboards, 2 spacious balconies, security checkpoints, and high speed elevator tracks.",
+      "listing_type": "entire_unit",
+      "price_per_month": 32000,
+      "deposit": 90000,
+      "address": "Kakkanad InfoPark, Kochi, Kerala 682030",
+      "latitude": 10.0159,
+      "longitude": 76.3639,
+      "available_from": "2026-07-15",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-05-28T15:20:47.899Z",
+      "apartment_type": "3BHK",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "No heavy partying on premises",
+        "Monthly rent pays on 1st of calendar"
+      ],
+      "amenities": [
+        "Gym",
+        "Security",
+        "Parking",
+        "Elevator",
+        "Central AC",
+        "Common Lounge"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-unit-4": {
+      "id": "list-unit-4",
+      "owner_id": "user-owner-3",
+      "title": "Prestige 2BHK Tower Flat - Kowdiar, Trivandrum",
+      "description": "Exclusive luxury residence offered by Travancore Builders. Prestigious high security complex, visual intercoms, dedicated security, continuous borewell/drinking water supply, and complete dual backup grids.",
+      "listing_type": "entire_unit",
+      "price_per_month": 26000,
+      "deposit": 75000,
+      "address": "Kowdiar Main Rd, Kowdiar, Thiruvananthapuram, Kerala 695003",
+      "latitude": 8.5241,
+      "longitude": 76.9536,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-08T15:20:47.899Z",
+      "apartment_type": "2BHK",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "Quiet family-oriented building blocks",
+        "Subletting strictly prohibited"
+      ],
+      "amenities": [
+        "Security",
+        "Parking",
+        "Common Lounge",
+        "Pets Allowed",
+        "Bicycle Storage"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-unit-5": {
+      "id": "list-unit-5",
+      "owner_id": "user-owner-4",
+      "title": "Executive 1BHK Studio - Hilite City, Kozhikode",
+      "description": "Fabulous fully loaded executive studio suite at Hilite Mall Complex. Automated remote control blinds, complete AC, high-speed gaming fiber ready, and gym membership included.",
+      "listing_type": "entire_unit",
+      "price_per_month": 18000,
+      "deposit": 50000,
+      "address": "Hilite City, Bypass Rd, Kozhikode, Kerala 673016",
+      "latitude": 11.2483,
+      "longitude": 75.834,
+      "available_from": "2026-08-01",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-17T15:20:47.899Z",
+      "apartment_type": "Studio Flat",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "No smoking in unit",
+        "Only registered occupants"
+      ],
+      "amenities": [
+        "Gym",
+        "Pool",
+        "Parking",
+        "Security",
+        "Doorman",
+        "Elevator"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-unit-6": {
+      "id": "list-unit-6",
+      "owner_id": "user-owner-5",
+      "title": "Elite 3BHK Family Flat - Round North, Thrissur",
+      "description": "Huge family layout right at Sree Vadakkumnathan temple round. Stunning design, large rooms, private service balcony, and highly secure. Perfect for families or professional flat sharers.",
+      "listing_type": "entire_unit",
+      "price_per_month": 35000,
+      "deposit": 100000,
+      "address": "Swaraj Round North, Thrissur, Kerala 680001",
+      "latitude": 10.5276,
+      "longitude": 76.2144,
+      "available_from": "2026-07-15",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-12T15:20:47.899Z",
+      "apartment_type": "3BHK",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "Maintain serene temple zone quietness",
+        "No pets allowed"
+      ],
+      "amenities": [
+        "Security",
+        "Parking",
+        "Central AC",
+        "Power Backup"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "list-unit-7": {
+      "id": "list-unit-7",
+      "owner_id": "user-owner-6",
+      "title": "Scenic 2BHK Lakeview Unit - Alappuzha Port",
+      "description": "Superb scenic apartment right at the Punnamada Lake finish line. Uninterrupted fresh breeze, customized wood furniture, completely security-monitored campus.",
+      "listing_type": "entire_unit",
+      "price_per_month": 22000,
+      "deposit": 60000,
+      "address": "Finishing Point Rd, Alappuzha, Kerala 688013",
+      "latitude": 9.4981,
+      "longitude": 76.3388,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "is_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-06-07T15:20:47.899Z",
+      "apartment_type": "2BHK",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "No commercial event hosting",
+        "Respect garbage segregations"
+      ],
+      "amenities": [
+        "Security",
+        "Parking",
+        "Common Lounge",
+        "Pets Allowed",
+        "Bicycle Storage"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=800"
+      ]
+    }
+  },
+  "messages": [
+    {
+      "id": "msg-1",
+      "sender_id": "user-seeker-1",
+      "receiver_id": "user-tenant-1",
+      "message_text": "Hey Clara! Your master bedroom in Brooklyn looks absolutely beautiful. I love the high ceilings and your plants! I'm a software engineer, very clean and friendly. Is it still available for viewings?",
+      "sent_at": "2026-06-22T13:20:47.899Z"
+    },
+    {
+      "id": "msg-2",
+      "sender_id": "user-tenant-1",
+      "receiver_id": "user-seeker-1",
+      "message_text": "Hi Alex! Thanks so much for reaching out. Yes, the room is still available! That's awesome that you work in tech and enjoy hiking. I'm actually hosting private viewings this Saturday afternoon. Would you be free to pop by around 2 PM?",
+      "sent_at": "2026-06-22T13:50:47.899Z"
+    },
+    {
+      "id": "msg-3",
+      "sender_id": "user-seeker-1",
+      "receiver_id": "user-tenant-1",
+      "message_text": "Saturday at 2 PM works perfectly for me! I can send over my social links and Linkedin if you want to verify beforehand. Looking forward to meeting you!",
+      "sent_at": "2026-06-22T14:50:47.899Z"
+    }
+  ]
+}
