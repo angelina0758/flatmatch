@@ -22,7 +22,7 @@ import { eq } from "drizzle-orm";
 declare global {
   namespace Express {
     interface Request {
-      user?: { id: string };
+      user?: { id: string; role: string };
     }
   }
 }
@@ -1739,14 +1739,14 @@ function getAiClient(): GoogleGenAI | null {
 
 const JWT_SECRET = process.env.JWT_SECRET || "flatmatch-super-secret-key-prod-2026";
 
-export function generateToken(payload: { userId: string }): string {
+export function generateToken(payload: { userId: string; role: string }): string {
   const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url");
   const data = Buffer.from(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 7 * 24 * 3600 })).toString("base64url");
   const signature = crypto.createHmac("sha256", JWT_SECRET).update(`${header}.${data}`).digest("base64url");
   return `${header}.${data}.${signature}`;
 }
 
-export function verifyToken(token: string): { userId: string } | null {
+export function verifyToken(token: string): { userId: string; role: string } | null {
   try {
     const [header, data, signature] = token.split(".");
     if (!header || !data || !signature) return null;
@@ -1782,23 +1782,18 @@ export function authenticateToken(req: any, res: any, next: any) {
   if (!parsed || !parsed.userId) {
     return res.status(403).json({ error: "Access denied. Invalid or expired token signature." });
   }
-  req.user = { id: parsed.userId };
+  req.user = { id: parsed.userId, role: parsed.role };
   next();
 }
 
 export function authorizeRoles(...allowedRoles: string[]) {
   return (req: any, res: any, next: any) => {
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({ error: "Access denied. User session unauthenticated." });
+    if (!req.user || !req.user.id || !req.user.role) {
+      return res.status(401).json({ error: "Access denied. User session unauthenticated or role missing." });
     }
-    const db = readDatabase();
-    const user = db.users[req.user.id];
-    if (!user) {
-      return res.status(404).json({ error: "Access denied. Associated user record not found in the flat indexing store." });
-    }
-    if (!allowedRoles.includes(user.user_type)) {
+    if (!allowedRoles.includes(req.user.role)) {
       return res.status(403).json({ 
-        error: `Forbidden. Role-based privilege level violation. Your current user category (${user.user_type}) does not enjoy authorized credentials for accessing this view.` 
+        error: `Forbidden. Role-based privilege level violation. Your current user category (${req.user.role}) does not enjoy authorized credentials for accessing this view.` 
       });
     }
     next();
@@ -1914,7 +1909,7 @@ async function startServer() {
     db.profiles[userId] = newProfile;
     writeDatabase(db);
 
-    const token = generateToken({ userId: newUser.id });
+    const token = generateToken({ userId: newUser.id, role: newUser.user_type });
     res.setHeader("Set-Cookie", `flatmatch_token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=604800`);
     res.status(201).json({ user: newUser, profile: newProfile, token });
   });
@@ -1954,7 +1949,7 @@ async function startServer() {
       wfh_status: "hybrid"
     };
 
-    const token = generateToken({ userId: user.id });
+    const token = generateToken({ userId: user.id, role: user.user_type });
     res.setHeader("Set-Cookie", `flatmatch_token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=604800`);
     res.json({ user, profile, token });
   });
@@ -2417,7 +2412,7 @@ async function startServer() {
   });
 
   // MATCHING ENGINE
-  app.get("/api/v1/matches", authenticateToken, (req, res) => {
+  app.get("/api/v1/matches", authenticateToken, authorizeRoles("seeker", "tenant"), (req, res) => {
     const userId = req.user.id;
     const db = readDatabase();
     const targetUser = db.users[userId];
@@ -2899,7 +2894,7 @@ Please analyze why they match so well or point out any light adaptation tips. Ad
   });
 
   // Propose a new viewing slot
-  app.post("/api/v1/schedules", authenticateToken, (req, res) => {
+  app.post("/api/v1/schedules", authenticateToken, authorizeRoles("seeker"), (req, res) => {
     const seeker_id = req.user.id;
     const { listing_id, proposed_time, notes } = req.body;
     if (!listing_id || !proposed_time) {

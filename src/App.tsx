@@ -101,6 +101,7 @@ export function MainApp() {
   const [regEmail, setRegEmail] = useState('');
   const [regType, setRegType] = useState<'seeker' | 'tenant' | 'owner'>('seeker');
   const [regPhone, setRegPhone] = useState('');
+  const [entryRole, setEntryRole] = useState<'seeker' | 'tenant' | 'owner' | null>(null);
 
   // Listings Discovery Page States
   const [listings, setListings] = useState<Listing[]>([]);
@@ -275,10 +276,18 @@ export function MainApp() {
         return;
       }
       // Set appropriate activeTab based on user role to keep rendering sync
-      if (currentUser.user_type === 'owner' && activeTab !== 'owner_dashboard' && activeTab !== 'profile') {
-        setActiveTab('owner_dashboard');
-      } else if (currentUser.user_type !== 'owner' && activeTab === 'owner_dashboard') {
-        setActiveTab('discovery');
+      if (currentUser.user_type === 'owner') {
+        if (activeTab !== 'owner_dashboard' && activeTab !== 'profile') {
+          setActiveTab('owner_dashboard');
+        }
+      } else if (currentUser.user_type === 'tenant') {
+        if (activeTab !== 'matrix' && activeTab !== 'messages' && activeTab !== 'profile') {
+          setActiveTab('matrix');
+        }
+      } else if (currentUser.user_type === 'seeker') {
+        if (activeTab !== 'discovery' && activeTab !== 'matrix' && activeTab !== 'messages' && activeTab !== 'profile') {
+          setActiveTab('discovery');
+        }
       }
     } else if (path === '/login') {
       if (currentUser) {
@@ -348,15 +357,16 @@ export function MainApp() {
       setAiBreakdown(null);
       
       // Sync active view tab if unsupported by the new user role
-      const isOwner = selected.user_type === 'owner';
-      const isSeekerOrTenant = selected.user_type === 'seeker' || selected.user_type === 'tenant';
-
-      if (isOwner) {
+      if (selected.user_type === 'owner') {
         if (activeTab !== 'owner_dashboard' && activeTab !== 'profile') {
           setActiveTab('owner_dashboard');
         }
-      } else if (isSeekerOrTenant) {
-        if (activeTab === 'owner_dashboard') {
+      } else if (selected.user_type === 'tenant') {
+        if (activeTab !== 'matrix' && activeTab !== 'messages' && activeTab !== 'profile') {
+          setActiveTab('matrix');
+        }
+      } else if (selected.user_type === 'seeker') {
+        if (activeTab !== 'discovery' && activeTab !== 'matrix' && activeTab !== 'messages' && activeTab !== 'profile') {
           setActiveTab('discovery');
         }
       }
@@ -973,17 +983,25 @@ export function MainApp() {
   // Perform User Registration
   const handleRegisterUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!regName || !regEmail) {
+    const target = e.currentTarget as HTMLFormElement;
+    const formData = new FormData(target);
+    const nameVal = (formData.get('full_name') as string) || regName;
+    const emailVal = (formData.get('email') as string) || regEmail;
+    const phoneVal = (formData.get('phone_number') as string) || regPhone;
+    const typeVal = (formData.get('user_type') as 'seeker' | 'tenant' | 'owner') || regType;
+    const passwordVal = (formData.get('password') as string) || "password123";
+
+    if (!nameVal || !emailVal) {
       alert('Full Name and Email address are required fields.');
       return;
     }
 
-    if (!regPhone) {
+    if (!phoneVal) {
       alert('Mobile number with +91 country code is mandatory.');
       return;
     }
 
-    const cleanPhone = regPhone.replace(/[\s-()]/g, '');
+    const cleanPhone = phoneVal.replace(/[\s-()]/g, '');
     if (!cleanPhone.startsWith('+91')) {
       alert('Mobile number must start with +91 country code for the Indian market.');
       return;
@@ -999,9 +1017,10 @@ export function MainApp() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: regEmail,
-          full_name: regName,
-          user_type: regType,
+          email: emailVal,
+          full_name: nameVal,
+          password: passwordVal,
+          user_type: typeVal,
           phone_number: cleanPhone,
         }),
       });
@@ -1237,16 +1256,121 @@ export function MainApp() {
   };
 
   if (location.pathname === '/login') {
+    if (entryRole === null) {
+      return (
+        <div className="w-[1024px] h-[768px] bg-[#E4E3E0] text-[#141414] font-sans overflow-hidden flex flex-col justify-center items-center border-[8px] border-[#141414] mx-auto relative shadow-2xl">
+          <div className="text-center mb-8">
+            <span className="inline-block font-extrabold tracking-tighter text-3xl bg-[#141414] text-white px-6 py-2 border-2 border-[#141414] uppercase shadow-[4px_4px_0px_#FAF9F5]">
+              🏢 FLATMATCH PORTAL
+            </span>
+            <p className="text-xs font-serif italic text-neutral-600 mt-3 font-bold">
+              Roommate Compatibility Matrix & Smart Real-Estate Discovery (India Localization)
+            </p>
+          </div>
+
+          <div className="flex gap-6 max-w-[920px] w-full px-4">
+            {/* Seeker Card */}
+            <div className="flex-1 bg-white border-4 border-[#141414] p-6 shadow-[8px_8px_0px_#141414] flex flex-col justify-between hover:translate-y-[-4px] transition-all duration-200">
+              <div>
+                <div className="w-12 h-12 bg-[#D2F57C] border-2 border-[#141414] flex items-center justify-center mb-4">
+                  <Search className="w-6 h-6 text-[#141414]" />
+                </div>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-2">Room Seeker</h3>
+                <p className="text-[10px] font-mono uppercase text-zinc-500 mb-3">Looking for a home</p>
+                <p className="text-xs text-neutral-650 leading-relaxed mb-4">
+                  Browse shared stays and entire units geographically. Find compatible roommates via our AI-powered matrix compatibility engine.
+                </p>
+              </div>
+              <button 
+                onClick={() => { setEntryRole('seeker'); setRegType('seeker'); }}
+                className="w-full bg-[#141414] text-white hover:bg-neutral-800 text-[10px] font-mono font-bold py-2.5 border-2 border-[#141414] uppercase tracking-wider shadow-[3px_3px_0px_#D2F57C] cursor-pointer"
+              >
+                Enter Seeker Portal
+              </button>
+            </div>
+
+            {/* Tenant Card */}
+            <div className="flex-1 bg-white border-4 border-[#141414] p-6 shadow-[8px_8px_0px_#141414] flex flex-col justify-between hover:translate-y-[-4px] transition-all duration-200">
+              <div>
+                <div className="w-12 h-12 bg-[#FCD34D] border-2 border-[#141414] flex items-center justify-center mb-4">
+                  <UserIcon className="w-6 h-6 text-[#141414]" />
+                </div>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-2">Existing Tenant</h3>
+                <p className="text-[10px] font-mono uppercase text-zinc-500 mb-3">Have a stay, looking to share</p>
+                <p className="text-xs text-neutral-650 leading-relaxed mb-4">
+                  List your spare bedroom/shared flat. Review compatibility scores of prospective flatmates and organize tours securely.
+                </p>
+              </div>
+              <button 
+                onClick={() => { setEntryRole('tenant'); setRegType('tenant'); }}
+                className="w-full bg-[#141414] text-white hover:bg-neutral-800 text-[10px] font-mono font-bold py-2.5 border-2 border-[#141414] uppercase tracking-wider shadow-[3px_3px_0px_#FCD34D] cursor-pointer"
+              >
+                Enter Tenant Portal
+              </button>
+            </div>
+
+            {/* Property Owner Card */}
+            <div className="flex-1 bg-white border-4 border-[#141414] p-6 shadow-[8px_8px_0px_#141414] flex flex-col justify-between hover:translate-y-[-4px] transition-all duration-200">
+              <div>
+                <div className="w-12 h-12 bg-[#93C5FD] border-2 border-[#141414] flex items-center justify-center mb-4">
+                  <Upload className="w-6 h-6 text-[#141414]" />
+                </div>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-2">Property Owner</h3>
+                <p className="text-[10px] font-mono uppercase text-zinc-500 mb-3">Landlord / Conglomerate</p>
+                <p className="text-xs text-neutral-650 leading-relaxed mb-4">
+                  Manage apartment complex units. Import listings in bulk via CSV/JSON format, monitor landlord portfolios, and simulate premium plans.
+                </p>
+              </div>
+              <button 
+                onClick={() => { setEntryRole('owner'); setRegType('owner'); }}
+                className="w-full bg-[#141414] text-white hover:bg-neutral-800 text-[10px] font-mono font-bold py-2.5 border-2 border-[#141414] uppercase tracking-wider shadow-[3px_3px_0px_#93C5FD] cursor-pointer"
+              >
+                Enter Owner Portal
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="w-[1024px] h-[768px] bg-[#E4E3E0] text-[#141414] font-sans overflow-hidden flex flex-col justify-center items-center border-[8px] border-[#141414] mx-auto relative shadow-2xl">
         <div className="w-[450px] bg-white border-4 border-[#141414] p-8 shadow-[8px_8px_0px_#141414]">
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <span className="inline-block font-extrabold tracking-tighter text-2xl bg-[#141414] text-white px-4 py-1.5 border-2 border-[#141414] uppercase">
               FLATMATCH // SECURE
             </span>
-            <p className="text-xs font-serif italic text-neutral-600 mt-3">
-              Role-Based Access Control and Smart Profile Matching
+            <p className="text-xs font-serif italic text-neutral-600 mt-2 font-semibold">
+              Authenticated Portal: {entryRole.toUpperCase()}
             </p>
+          </div>
+
+          {/* Prominent 3-way toggle */}
+          <div className="flex border-2 border-[#141414] mb-6 p-1 bg-[#F5F5F3]">
+            {[
+              { key: 'seeker', label: 'Seeker' },
+              { key: 'tenant', label: 'Tenant' },
+              { key: 'owner', label: 'Owner' }
+            ].map((role) => {
+              const isActive = entryRole === role.key;
+              return (
+                <button
+                  key={role.key}
+                  type="button"
+                  onClick={() => {
+                    setEntryRole(role.key as any);
+                    setRegType(role.key as any);
+                  }}
+                  className={`flex-1 text-[10px] font-bold py-1.5 uppercase transition-all duration-150 cursor-pointer ${
+                    isActive 
+                      ? 'bg-[#141414] text-white border border-[#141414] shadow-sm' 
+                      : 'text-[#141414] hover:bg-neutral-200'
+                  }`}
+                >
+                  {role.label}
+                </button>
+              );
+            })}
           </div>
 
           {loginError && (
@@ -1267,6 +1391,11 @@ export function MainApp() {
               });
               const reply = await res.json();
               if (res.ok) {
+                // Assert role restriction on login!
+                if (reply.user.user_type !== entryRole) {
+                  throw new Error(`This account is registered as an ${reply.user.user_type.toUpperCase()}. You are attempting to log in to the ${entryRole.toUpperCase()} portal. Access denied.`);
+                }
+
                 setAuthToken(reply.token);
                 localStorage.setItem('flatmatch_authToken', reply.token);
                 setCurrentUser(reply.user);
@@ -1308,14 +1437,14 @@ export function MainApp() {
           }} className="space-y-4">
             <div>
               <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
-                Account Email Address
+                Account Email Address ({entryRole.toUpperCase()})
               </label>
               <input
                 type="email"
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
                 className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
-                placeholder="e.g. seeker.alex@example.com"
+                placeholder={`e.g. ${entryRole}.alex@example.com`}
                 required
               />
             </div>
@@ -1344,13 +1473,13 @@ export function MainApp() {
           </form>
 
           {/* Quick Simulation Account Selector */}
-          <div className="mt-8 border-t-2 border-dashed border-[#141414] pt-4">
+          <div className="mt-6 border-t-2 border-dashed border-[#141414] pt-4">
             <span className="block text-[9px] font-mono font-bold opacity-75 uppercase tracking-wider text-center mb-2">
               ⚠️ Developer / Reviewer Simulator Tool
             </span>
             <div className="flex flex-col gap-1.5 bg-[#FAF9F5] p-3 border-2 border-[#141414]">
               <span className="block text-[9px] font-mono leading-none font-medium text-neutral-600 mb-1">
-                Select a seed participant profile to auto-authenticate using verified state signatures:
+                Select a seed {entryRole.toUpperCase()} profile to auto-authenticate:
               </span>
               <select
                 onChange={async (e) => {
@@ -1366,7 +1495,7 @@ export function MainApp() {
                 defaultValue=""
               >
                 <option value="" disabled>-- Select Quick Login Shortcut --</option>
-                {allUsers.map((u) => (
+                {allUsers.filter(u => u.user_type === entryRole).map((u) => (
                   <option key={u.id} value={u.id}>
                     {u.full_name} ({u.user_type.toUpperCase()})
                   </option>
@@ -1375,12 +1504,21 @@ export function MainApp() {
             </div>
           </div>
 
-          <div className="mt-4 text-center">
+          <div className="mt-4 text-center flex flex-col gap-2">
             <button
-              onClick={() => setShowRegisterModal(true)}
+              onClick={() => {
+                setRegType(entryRole);
+                setShowRegisterModal(true);
+              }}
               className="text-[11px] font-serif italic text-neutral-600 hover:text-[#141414] underline cursor-pointer"
             >
-              Do not have an account? Register flat simulation profile
+              Do not have an account? Register simulation profile
+            </button>
+            <button
+              onClick={() => setEntryRole(null)}
+              className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-500 hover:text-[#141414] mt-2 flex items-center justify-center gap-1 cursor-pointer"
+            >
+              ← Back to role portals
             </button>
           </div>
         </div>
@@ -1390,7 +1528,7 @@ export function MainApp() {
           <div className="fixed inset-0 bg-[#141414]/80 flex items-center justify-center z-50 p-4">
             <div className="w-[500px] bg-white border-4 border-[#141414] p-6 shadow-[8px_8px_0px_#101010]">
               <div className="flex justify-between items-center pb-3 border-b border-[#141414] mb-3">
-                <span className="font-extrabold text-xs uppercase tracking-wider font-mono">Create Security Context</span>
+                <span className="font-extrabold text-xs uppercase tracking-wider font-mono">Create Security Context ({regType?.toUpperCase()})</span>
                 <button onClick={() => setShowRegisterModal(false)} className="text-[#141414] hover:text-red-600 cursor-pointer">
                   [CLOSE]
                 </button>
@@ -1417,7 +1555,13 @@ export function MainApp() {
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <label className="block text-[9px] font-mono font-bold mb-1">PROFILE CATEGORY</label>
-                    <select name="user_type" required className="w-full border border-[#141414] p-2 bg-[#F5F5F3]">
+                    <select 
+                      name="user_type" 
+                      required 
+                      className="w-full border border-[#141414] p-2 bg-[#F5F5F3]"
+                      value={regType}
+                      onChange={(e) => setRegType(e.target.value as any)}
+                    >
                       <option value="seeker">SEEKER (Roommate Seeker)</option>
                       <option value="tenant">TENANT (Current Tenant with Room)</option>
                       <option value="owner">OWNER (Corporate Property Owner)</option>
@@ -1498,7 +1642,7 @@ export function MainApp() {
             FLATMATCH // PRO
           </span>
           <nav className="flex gap-4 text-[11.5px] uppercase font-serif italic tracking-wider">
-            {currentUser?.user_type !== 'owner' && (
+            {currentUser?.user_type === 'seeker' && (
               <>
                 <button 
                   onClick={() => setActiveTab('discovery')}
@@ -1511,6 +1655,25 @@ export function MainApp() {
                   className={`pb-1 px-1 border-b-2 transition-all cursor-pointer ${activeTab === 'matrix' ? 'border-[#141414] font-bold text-[#141414] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
                 >
                   Compatibility Matrix
+                </button>
+                <button 
+                  onClick={() => setActiveTab('messages')}
+                  className={`pb-1 px-1 border-b-2 transition-all cursor-pointer relative ${activeTab === 'messages' ? 'border-[#141414] font-bold text-[#141414] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                >
+                  Messages
+                  <span className="ml-1 bg-red-500 text-white text-[8px] font-mono rounded px-1 py-0.2">
+                    12
+                  </span>
+                </button>
+              </>
+            )}
+            {currentUser?.user_type === 'tenant' && (
+              <>
+                <button 
+                  onClick={() => setActiveTab('matrix')}
+                  className={`pb-1 px-1 border-b-2 transition-all cursor-pointer ${activeTab === 'matrix' ? 'border-[#141414] font-bold text-[#141414] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                >
+                  Flatmate Matching
                 </button>
                 <button 
                   onClick={() => setActiveTab('messages')}
@@ -1549,7 +1712,7 @@ export function MainApp() {
               onChange={(e) => handleUserSwitch(e.target.value)}
               className="text-xs font-bold bg-[#F5F5F3] border border-[#141414] px-2 py-0.5 outline-none rounded-none cursor-pointer"
             >
-              {allUsers.map((u) => (
+              {allUsers.filter(u => u.user_type === currentUser?.user_type).map((u) => (
                 <option key={u.id} value={u.id}>
                   {u.full_name} ({u.user_type.toUpperCase()})
                 </option>
@@ -1571,7 +1734,7 @@ export function MainApp() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* DISCOVERY TAB VIEW */}
-        {activeTab === 'discovery' && (
+        {activeTab === 'discovery' && currentUser?.user_type === 'seeker' && (
           <div className="flex-1 flex overflow-hidden">
             
             {/* LEFT SEARCH BAR SIDEBAR */}
@@ -2085,7 +2248,7 @@ export function MainApp() {
         )}
 
         {/* COMPATIBILITY MATRIX TAB VIEW */}
-        {activeTab === 'matrix' && (
+        {activeTab === 'matrix' && (currentUser?.user_type === 'seeker' || currentUser?.user_type === 'tenant') && (
           <div className="flex-1 flex overflow-hidden">
             
             {/* LIFESTYLE LIST OF COOPERATIVES */}
@@ -2321,7 +2484,7 @@ export function MainApp() {
         )}
 
         {/* IN-APP MESSAGES CHAT SCREEN */}
-        {activeTab === 'messages' && (
+        {activeTab === 'messages' && (currentUser?.user_type === 'seeker' || currentUser?.user_type === 'tenant') && (
           <div className="flex-1 flex overflow-hidden">
             
             {/* ACTIVE CONVERSATION AND SCHEDULE CONDUITS */}
@@ -2692,7 +2855,7 @@ export function MainApp() {
         )}
 
         {/* OWNER BULK HUB DASHBOARD VIEW */}
-        {activeTab === 'owner_dashboard' && (
+        {activeTab === 'owner_dashboard' && currentUser?.user_type === 'owner' && (
           <div className="flex-1 flex overflow-hidden">
             
             {/* PROPERTY BULK CSV PASTING CONTAINER */}
