@@ -6,3 +6,5 @@ coverage/
 *.log
 .env*
 !.env.example
+README.md 
+SAAS_PLATFORM_SPECIFICATION.md
