@@ -1,60 +1,5 @@
 {
   "users": {
-    "user-seeker-1": {
-      "id": "user-seeker-1",
-      "email": "seeker.alex@example.com",
-      "password": "password123",
-      "full_name": "Alex Johnson",
-      "user_type": "seeker",
-      "phone_number": "+1 (555) 123-4567",
-      "is_verified": true,
-      "tier": "premium_seeker",
-      "created_at": "2026-05-23T15:20:47.894Z"
-    },
-    "user-seeker-2": {
-      "id": "user-seeker-2",
-      "email": "seeker.rahul@example.com",
-      "password": "password123",
-      "full_name": "Rahul Nair",
-      "user_type": "seeker",
-      "phone_number": "+91 94470 11223",
-      "is_verified": true,
-      "tier": "premium_seeker",
-      "created_at": "2026-06-17T15:20:47.898Z"
-    },
-    "user-seeker-3": {
-      "id": "user-seeker-3",
-      "email": "seeker.anjali@example.com",
-      "password": "password123",
-      "full_name": "Anjali Menon",
-      "user_type": "seeker",
-      "phone_number": "+91 94950 44556",
-      "is_verified": true,
-      "tier": "premium_seeker",
-      "created_at": "2026-06-18T15:20:47.898Z"
-    },
-    "user-seeker-4": {
-      "id": "user-seeker-4",
-      "email": "seeker.fahad@example.com",
-      "password": "password123",
-      "full_name": "Fahad Fazal",
-      "user_type": "seeker",
-      "phone_number": "+91 98450 77889",
-      "is_verified": true,
-      "tier": "free",
-      "created_at": "2026-06-19T15:20:47.898Z"
-    },
-    "user-tenant-1": {
-      "id": "user-tenant-1",
-      "email": "tenant.clara@example.com",
-      "password": "password123",
-      "full_name": "Clara Mendoza",
-      "user_type": "tenant",
-      "phone_number": "+1 (555) 987-6543",
-      "is_verified": true,
-      "tier": "free",
-      "created_at": "2026-06-07T15:20:47.898Z"
-    },
     "user-tenant-2": {
       "id": "user-tenant-2",
       "email": "tenant.dave@example.com",
@@ -164,6 +109,72 @@
       "is_verified": true,
       "tier": "free",
       "created_at": "2026-05-23T15:20:47.898Z"
+    },
+    "user-us8n78lip": {
+      "id": "user-us8n78lip",
+      "email": "test.newseeker@example.com",
+      "password": "password123",
+      "full_name": "Test Seeker User",
+      "user_type": "seeker",
+      "phone_number": "+919999988888",
+      "is_verified": false,
+      "tier": "premium_seeker",
+      "created_at": "2026-06-23T11:05:14.049Z"
+    },
+    "user-seeker-1": {
+      "id": "user-seeker-1",
+      "email": "seeker.alex@example.com",
+      "password": "password123",
+      "full_name": "Alex Johnson",
+      "user_type": "seeker",
+      "phone_number": "+1 (555) 123-4567",
+      "is_verified": true,
+      "tier": "premium_seeker",
+      "created_at": "2026-05-23T15:20:47.894Z"
+    },
+    "user-seeker-2": {
+      "id": "user-seeker-2",
+      "email": "seeker.rahul@example.com",
+      "password": "password123",
+      "full_name": "Rahul Nair",
+      "user_type": "seeker",
+      "phone_number": "+91 94470 11223",
+      "is_verified": true,
+      "tier": "premium_seeker",
+      "created_at": "2026-06-17T15:20:47.898Z"
+    },
+    "user-seeker-3": {
+      "id": "user-seeker-3",
+      "email": "seeker.anjali@example.com",
+      "password": "password123",
+      "full_name": "Anjali Menon",
+      "user_type": "seeker",
+      "phone_number": "+91 94950 44556",
+      "is_verified": true,
+      "tier": "premium_seeker",
+      "created_at": "2026-06-18T15:20:47.898Z"
+    },
+    "user-seeker-4": {
+      "id": "user-seeker-4",
+      "email": "seeker.fahad@example.com",
+      "password": "password123",
+      "full_name": "Fahad Fazal",
+      "user_type": "seeker",
+      "phone_number": "+91 98450 77889",
+      "is_verified": true,
+      "tier": "free",
+      "created_at": "2026-06-19T15:20:47.898Z"
+    },
+    "user-tenant-1": {
+      "id": "user-tenant-1",
+      "email": "tenant.clara@example.com",
+      "password": "password123",
+      "full_name": "Clara Mendoza",
+      "user_type": "tenant",
+      "phone_number": "+1 (555) 987-6543",
+      "is_verified": true,
+      "tier": "free",
+      "created_at": "2026-06-07T15:20:47.898Z"
     }
   },
   "profiles": {
@@ -301,189 +312,24 @@
       "drinking": "socially",
       "sleeping_pattern": "flexible",
       "wfh_status": "office"
+    },
+    "user-us8n78lip": {
+      "user_id": "user-us8n78lip",
+      "bio": "Hello! I am Test Seeker User. I just joined FlatMatch as a seeker. Looking forward to connecting!",
+      "age": 25,
+      "gender": "Not Specified",
+      "profession": "Professional",
+      "smoker": false,
+      "pets_allowed": true,
+      "cleanliness_level": 4,
+      "budget_min": 5000,
+      "budget_max": 20000,
+      "drinking": "socially",
+      "sleeping_pattern": "flexible",
+      "wfh_status": "hybrid"
     }
   },
   "listings": {
-    "list-stay-1": {
-      "id": "list-stay-1",
-      "owner_id": "user-tenant-1",
-      "title": "Spacious En-suite Room in Vibrant Brooklyn 2BHK",
-      "description": "Looking for an awesome flatmate to occupy the master bedroom in a fully furnished modern 2-bedroom, 2-bathroom flat in the heart of Brooklyn. The room has high ceilings, a massive built-in wardrobe, and large East-facing windows that bring in beautiful morning light. Rest of the flat is shared with Clara, a 28yo designer.",
-      "listing_type": "shared_stay",
-      "price_per_month": 1150,
-      "deposit": 1150,
-      "address": "142 Greene Ave, Brooklyn, NY 11238",
-      "latitude": 40.6865,
-      "longitude": -73.9658,
-      "available_from": "2026-07-01",
-      "is_active": true,
-      "created_at": "2026-06-12T15:20:47.898Z",
-      "gender_preference": "Girls only",
-      "house_restrictions": [
-        "No smoking indoors",
-        "No overnight partners without prior notice",
-        "Quiet hours after 11 PM"
-      ],
-      "room_size": "14' x 16' (En-suite)",
-      "utility_split": "Split 50/50 (~₹1,500/month for high-speed fiber & electric)",
-      "current_flatmate_count": 1,
-      "apartment_type": null,
-      "amenities": [
-        "Gym",
-        "Security",
-        "High-speed Internet",
-        "In-unit Laundry",
-        "Rooftop Access"
-      ],
-      "image_urls": [
-        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800"
-      ],
-      "is_verified": true,
-      "verification_status": "verified"
-    },
-    "list-stay-2": {
-      "id": "list-stay-2",
-      "owner_id": "user-tenant-2",
-      "title": "Cozy Bedroom in Upper West Side High-rise",
-      "description": "Private room available in high-end luxury building. Extremely quiet space with gorgeous views. Sharing with Dave, a medical resident who is rarely home in the daytime. Ideal for someone who wants peace, quiet, and spotless cleanliness. There is a study desk and standard furniture provided.",
-      "listing_type": "shared_stay",
-      "price_per_month": 1400,
-      "deposit": 1000,
-      "address": "320 West 86th St, New York, NY 10024",
-      "latitude": 40.7895,
-      "longitude": -73.9795,
-      "available_from": "2026-08-01",
-      "is_active": true,
-      "created_at": "2026-06-17T15:20:47.898Z",
-      "gender_preference": "Boys only",
-      "house_restrictions": [
-        "Strict quiet hours",
-        "No pets allowed",
-        "Exemplary kitchen cleanup after cooking"
-      ],
-      "room_size": "12' x 11'",
-      "utility_split": "All-inclusive (Wifi/AC included in rent)",
-      "current_flatmate_count": 1,
-      "apartment_type": null,
-      "amenities": [
-        "Gym",
-        "Pool",
-        "Parking",
-        "Security",
-        "Doorman",
-        "Elevator"
-      ],
-      "image_urls": [
-        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800"
-      ],
-      "verification_status": null
-    },
-    "list-stay-3": {
-      "id": "list-stay-3",
-      "owner_id": "user-tenant-3",
-      "title": "Master Room in Skylark Flat - Edappally, Kochi (3 Flatmates)",
-      "description": "Looking for an awesome flatmate to join us in our flat. We are 3 working professionals already occupying the apartment. The available room is spacious, with a separate balcony and attached washroom.",
-      "listing_type": "shared_stay",
-      "price_per_month": 6500,
-      "deposit": 15000,
-      "address": "Skyline Imperial, Edappally, Kochi, Kerala 682024",
-      "latitude": 10.0261,
-      "longitude": 76.3125,
-      "available_from": "2026-07-01",
-      "is_active": true,
-      "created_at": "2026-06-17T15:20:47.899Z",
-      "gender_preference": "Boys only",
-      "house_restrictions": [
-        "No smoking in room",
-        "No midnight heavy noise"
-      ],
-      "room_size": "12' x 11'",
-      "utility_split": "Split evenly among 4 roommates",
-      "current_flatmate_count": 3,
-      "apartment_type": null,
-      "amenities": [
-        "High-speed Internet",
-        "Security",
-        "In-unit Laundry",
-        "Parking"
-      ],
-      "image_urls": [
-        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800"
-      ],
-      "is_verified": true,
-      "verification_status": "verified"
-    },
-    "list-stay-4": {
-      "id": "list-stay-4",
-      "owner_id": "user-tenant-4",
-      "title": "Cozy Shared Stay near Technopark - Trivandrum (3 Flatmates)",
-      "description": "A wonderful clean single bedroom available in our 4-bedroom villa. Currently there are 3 female working roommates. Safe residential colony with security and easy metro commuting.",
-      "listing_type": "shared_stay",
-      "price_per_month": 5500,
-      "deposit": 10000,
-      "address": "Technopark Phase 1 Road, Kazhakkoottam, Thiruvananthapuram, Kerala 695581",
-      "latitude": 8.5581,
-      "longitude": 76.8845,
-      "available_from": "2026-07-01",
-      "is_active": true,
-      "created_at": "2026-06-18T15:20:47.899Z",
-      "gender_preference": "Girls only",
-      "house_restrictions": [
-        "Strict clean cleanup rules",
-        "Quiet hours after 10 PM"
-      ],
-      "room_size": "10' x 11'",
-      "utility_split": "Split 4 ways evenly",
-      "current_flatmate_count": 3,
-      "apartment_type": null,
-      "amenities": [
-        "High-speed Internet",
-        "Food Included",
-        "Kitchen",
-        "Security"
-      ],
-      "image_urls": [
-        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800"
-      ],
-      "is_verified": true,
-      "verification_status": "verified"
-    },
-    "list-stay-5": {
-      "id": "list-stay-5",
-      "owner_id": "user-tenant-5",
-      "title": "Single Room in Beach Road Flat - Kozhikode (3 Flatmates)",
-      "description": "Private third bedroom in a spacious 4BHK flat right next to Kozhikode beach. Relaxed atmosphere, sharing with 3 chill guys. Very friendly environment.",
-      "listing_type": "shared_stay",
-      "price_per_month": 6000,
-      "deposit": 12000,
-      "address": "Beach Road near Kozhikode Beach, Kozhikode, Kerala 673001",
-      "latitude": 11.2588,
-      "longitude": 75.7804,
-      "available_from": "2026-07-01",
-      "is_active": true,
-      "created_at": "2026-06-19T15:20:47.899Z",
-      "gender_preference": "No preference",
-      "house_restrictions": [
-        "Clean your own plates immediately",
-        "Restricted commercial guests"
-      ],
-      "room_size": "11' x 11'",
-      "utility_split": "Split all bills equally",
-      "current_flatmate_count": 3,
-      "apartment_type": null,
-      "amenities": [
-        "Kitchen",
-        "Parking",
-        "High-speed Internet",
-        "Rooftop Access"
-      ],
-      "image_urls": [
-        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800"
-      ],
-      "is_verified": true,
-      "verification_status": "verified"
-    },
     "list-unit-1": {
       "id": "list-unit-1",
       "owner_id": "user-owner-1",
@@ -653,6 +499,148 @@
       "is_verified": true,
       "verification_status": "verified"
     },
+    "list-stay-2": {
+      "id": "list-stay-2",
+      "owner_id": "user-tenant-2",
+      "title": "Cozy Bedroom in Upper West Side High-rise",
+      "description": "Private room available in high-end luxury building. Extremely quiet space with gorgeous views. Sharing with Dave, a medical resident who is rarely home in the daytime. Ideal for someone who wants peace, quiet, and spotless cleanliness. There is a study desk and standard furniture provided.",
+      "listing_type": "shared_stay",
+      "price_per_month": 1400,
+      "deposit": 1000,
+      "address": "320 West 86th St, New York, NY 10024",
+      "latitude": 40.7895,
+      "longitude": -73.9795,
+      "available_from": "2026-08-01",
+      "is_active": true,
+      "created_at": "2026-06-17T15:20:47.898Z",
+      "gender_preference": "Boys only",
+      "house_restrictions": [
+        "Strict quiet hours",
+        "No pets allowed",
+        "Exemplary kitchen cleanup after cooking"
+      ],
+      "room_size": "12' x 11'",
+      "utility_split": "All-inclusive (Wifi/AC included in rent)",
+      "current_flatmate_count": 1,
+      "apartment_type": null,
+      "amenities": [
+        "Gym",
+        "Pool",
+        "Parking",
+        "Security",
+        "Doorman",
+        "Elevator"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800"
+      ],
+      "verification_status": null
+    },
+    "list-stay-3": {
+      "id": "list-stay-3",
+      "owner_id": "user-tenant-3",
+      "title": "Master Room in Skylark Flat - Edappally, Kochi (3 Flatmates)",
+      "description": "Looking for an awesome flatmate to join us in our flat. We are 3 working professionals already occupying the apartment. The available room is spacious, with a separate balcony and attached washroom.",
+      "listing_type": "shared_stay",
+      "price_per_month": 6500,
+      "deposit": 15000,
+      "address": "Skyline Imperial, Edappally, Kochi, Kerala 682024",
+      "latitude": 10.0261,
+      "longitude": 76.3125,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "created_at": "2026-06-17T15:20:47.899Z",
+      "gender_preference": "Boys only",
+      "house_restrictions": [
+        "No smoking in room",
+        "No midnight heavy noise"
+      ],
+      "room_size": "12' x 11'",
+      "utility_split": "Split evenly among 4 roommates",
+      "current_flatmate_count": 3,
+      "apartment_type": null,
+      "amenities": [
+        "High-speed Internet",
+        "Security",
+        "In-unit Laundry",
+        "Parking"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800"
+      ],
+      "is_verified": true,
+      "verification_status": "verified"
+    },
+    "list-stay-4": {
+      "id": "list-stay-4",
+      "owner_id": "user-tenant-4",
+      "title": "Cozy Shared Stay near Technopark - Trivandrum (3 Flatmates)",
+      "description": "A wonderful clean single bedroom available in our 4-bedroom villa. Currently there are 3 female working roommates. Safe residential colony with security and easy metro commuting.",
+      "listing_type": "shared_stay",
+      "price_per_month": 5500,
+      "deposit": 10000,
+      "address": "Technopark Phase 1 Road, Kazhakkoottam, Thiruvananthapuram, Kerala 695581",
+      "latitude": 8.5581,
+      "longitude": 76.8845,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "created_at": "2026-06-18T15:20:47.899Z",
+      "gender_preference": "Girls only",
+      "house_restrictions": [
+        "Strict clean cleanup rules",
+        "Quiet hours after 10 PM"
+      ],
+      "room_size": "10' x 11'",
+      "utility_split": "Split 4 ways evenly",
+      "current_flatmate_count": 3,
+      "apartment_type": null,
+      "amenities": [
+        "High-speed Internet",
+        "Food Included",
+        "Kitchen",
+        "Security"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800"
+      ],
+      "is_verified": true,
+      "verification_status": "verified"
+    },
+    "list-stay-5": {
+      "id": "list-stay-5",
+      "owner_id": "user-tenant-5",
+      "title": "Single Room in Beach Road Flat - Kozhikode (3 Flatmates)",
+      "description": "Private third bedroom in a spacious 4BHK flat right next to Kozhikode beach. Relaxed atmosphere, sharing with 3 chill guys. Very friendly environment.",
+      "listing_type": "shared_stay",
+      "price_per_month": 6000,
+      "deposit": 12000,
+      "address": "Beach Road near Kozhikode Beach, Kozhikode, Kerala 673001",
+      "latitude": 11.2588,
+      "longitude": 75.7804,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "created_at": "2026-06-19T15:20:47.899Z",
+      "gender_preference": "No preference",
+      "house_restrictions": [
+        "Clean your own plates immediately",
+        "Restricted commercial guests"
+      ],
+      "room_size": "11' x 11'",
+      "utility_split": "Split all bills equally",
+      "current_flatmate_count": 3,
+      "apartment_type": null,
+      "amenities": [
+        "Kitchen",
+        "Parking",
+        "High-speed Internet",
+        "Rooftop Access"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800"
+      ],
+      "is_verified": true,
+      "verification_status": "verified"
+    },
     "list-unit-6": {
       "id": "list-unit-6",
       "owner_id": "user-owner-5",
@@ -717,6 +705,44 @@
       ],
       "is_verified": true,
       "verification_status": "verified"
+    },
+    "list-stay-1": {
+      "id": "list-stay-1",
+      "owner_id": "user-tenant-1",
+      "title": "Spacious En-suite Room in Vibrant Brooklyn 2BHK",
+      "description": "Looking for an awesome flatmate to occupy the master bedroom in a fully furnished modern 2-bedroom, 2-bathroom flat in the heart of Brooklyn. The room has high ceilings, a massive built-in wardrobe, and large East-facing windows that bring in beautiful morning light. Rest of the flat is shared with Clara, a 28yo designer.",
+      "listing_type": "shared_stay",
+      "price_per_month": 1150,
+      "deposit": 1150,
+      "address": "142 Greene Ave, Brooklyn, NY 11238",
+      "latitude": 40.6865,
+      "longitude": -73.9658,
+      "available_from": "2026-07-01",
+      "is_active": true,
+      "created_at": "2026-06-12T15:20:47.898Z",
+      "gender_preference": "Girls only",
+      "house_restrictions": [
+        "No smoking indoors",
+        "No overnight partners without prior notice",
+        "Quiet hours after 11 PM"
+      ],
+      "room_size": "14' x 16' (En-suite)",
+      "utility_split": "Split 50/50 (~₹1,500/month for high-speed fiber & electric)",
+      "current_flatmate_count": 1,
+      "apartment_type": null,
+      "amenities": [
+        "Gym",
+        "Security",
+        "High-speed Internet",
+        "In-unit Laundry",
+        "Rooftop Access"
+      ],
+      "image_urls": [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800"
+      ],
+      "is_verified": true,
+      "verification_status": "verified"
     }
   },
   "messages": [
@@ -747,6 +773,118 @@
       "receiver_id": "user-owner-2",
       "message_text": "Hi! I saw your FlatMatch listing for \"Luxury 3BHK Apartment - Kakkanad InfoPark Peak\" and am heavily interested! I'd love to connect and chat about roommate compatibility when you have a moment. Thanks!",
       "sent_at": "2026-06-22T16:13:30.599Z"
+    },
+    {
+      "id": "msg-p6eguo4b3",
+      "sender_id": "user-seeker-2",
+      "receiver_id": "user-tenant-3",
+      "message_text": "Hi! I saw your FlatMatch listing for \"Master Room in Skylark Flat - Edappally, Kochi (3 Flatmates)\" and am heavily interested! I'd love to connect and chat about roommate compatibility when you have a moment. Thanks!",
+      "sent_at": "2026-06-23T10:41:16.318Z"
+    },
+    {
+      "id": "msg-v0qcypsfv",
+      "sender_id": "user-seeker-2",
+      "receiver_id": "user-owner-2",
+      "message_text": "Hi! I saw your FlatMatch listing for \"Luxury 3BHK Apartment - Kakkanad InfoPark Peak\" and am heavily interested! I'd love to connect and chat about roommate compatibility when you have a moment. Thanks!",
+      "sent_at": "2026-06-23T10:41:38.552Z"
+    },
+    {
+      "id": "msg-377y46pk1",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-tenant-3",
+      "message_text": "Hi! I saw your FlatMatch listing for \"Master Room in Skylark Flat - Edappally, Kochi (3 Flatmates)\" and am heavily interested! I'd love to connect and chat about roommate compatibility when you have a moment. Thanks!",
+      "sent_at": "2026-06-23T10:44:01.168Z"
+    },
+    {
+      "id": "msg-ocjb501ai",
+      "sender_id": "user-tenant-1",
+      "receiver_id": "user-seeker-4",
+      "message_text": "Hi! I saw your FlatMatch listing for \"Master Room in Skylark Flat - Edappally, Kochi (3 Flatmates)\" and am heavily interested! I'd love to connect and chat about roommate compatibility when you have a moment. Thanks!",
+      "sent_at": "2026-06-23T10:44:17.004Z"
+    },
+    {
+      "id": "msg-tezk8hvi7",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-tenant-3",
+      "message_text": "Test message from seeker",
+      "sent_at": "2026-06-23T10:47:29.108Z"
+    },
+    {
+      "id": "msg-klfsro2b6",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-tenant-3",
+      "message_text": "Test message using Enter key",
+      "sent_at": "2026-06-23T10:53:28.945Z"
+    },
+    {
+      "id": "msg-hopzka52k",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-seeker-4",
+      "message_text": "That sounds great! Let me review my schedule and get back to you with flatmate viewing slots. (Simulation Autoresp)",
+      "sent_at": "2026-06-23T10:53:33.569Z"
+    },
+    {
+      "id": "msg-jkirwp1kw",
+      "sender_id": "user-tenant-2",
+      "receiver_id": "user-seeker-2",
+      "message_text": "Hi! I saw your FlatMatch listing for \"Master Room in Skylark Flat - Edappally, Kochi (3 Flatmates)\" and am heavily interested! I'd love to connect and chat about roommate compatibility when you have a moment. Thanks!",
+      "sent_at": "2026-06-23T10:57:11.725Z"
+    },
+    {
+      "id": "msg-6aqx2jzto",
+      "sender_id": "user-tenant-2",
+      "receiver_id": "user-seeker-2",
+      "message_text": "hello",
+      "sent_at": "2026-06-23T10:57:14.530Z"
+    },
+    {
+      "id": "msg-15xd80wya",
+      "sender_id": "user-tenant-2",
+      "receiver_id": "user-seeker-2",
+      "message_text": "hi",
+      "sent_at": "2026-06-23T10:57:16.492Z"
+    },
+    {
+      "id": "msg-fn9czq3bc",
+      "sender_id": "user-tenant-2",
+      "receiver_id": "user-tenant-2",
+      "message_text": "That sounds great! Let me review my schedule and get back to you with flatmate viewing slots. (Simulation Autoresp)",
+      "sent_at": "2026-06-23T10:57:17.050Z"
+    },
+    {
+      "id": "msg-fqvv1eif5",
+      "sender_id": "user-tenant-2",
+      "receiver_id": "user-tenant-2",
+      "message_text": "That sounds great! Let me review my schedule and get back to you with flatmate viewing slots. (Simulation Autoresp)",
+      "sent_at": "2026-06-23T10:57:19.823Z"
+    },
+    {
+      "id": "msg-lr17pb36d",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-tenant-3",
+      "message_text": "Hello Gautham! I am testing the chat feature to see if it causes a reload or redirect.",
+      "sent_at": "2026-06-23T10:59:01.246Z"
+    },
+    {
+      "id": "msg-0v6bylcrc",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-seeker-4",
+      "message_text": "That sounds great! Let me review my schedule and get back to you with flatmate viewing slots. (Simulation Autoresp)",
+      "sent_at": "2026-06-23T10:59:03.797Z"
+    },
+    {
+      "id": "msg-7ro50c26a",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-tenant-1",
+      "message_text": "hi\\",
+      "sent_at": "2026-06-23T14:51:15.245Z"
+    },
+    {
+      "id": "msg-0ryq984fa",
+      "sender_id": "user-seeker-4",
+      "receiver_id": "user-seeker-4",
+      "message_text": "That sounds great! Let me review my schedule and get back to you with flatmate viewing slots. (Simulation Autoresp)",
+      "sent_at": "2026-06-23T14:51:18.088Z"
     }
   ],
   "schedules": {}

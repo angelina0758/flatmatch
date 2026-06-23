@@ -2298,7 +2298,7 @@ async function startServer() {
   // Upgrade Plan - secured using token
   app.post("/api/v1/auth/upgrade", authenticateToken, (req, res) => {
     const { tier } = req.body;
-    const userId = req.user.id;
+    const userId = req.user!.id;
     const db = readDatabase();
     if (!db.users[userId]) {
       return res.status(404).json({ error: "User not found." });
@@ -2311,7 +2311,7 @@ async function startServer() {
   // Parameterless profile and me endpoints (Production Grade Security Standards)
   app.get(["/api/v1/me", "/api/v1/profile"], authenticateToken, (req, res) => {
     const db = readDatabase();
-    const userId = req.user.id;
+    const userId = req.user!.id;
     const user = db.users[userId];
     const profile = db.profiles[userId];
 

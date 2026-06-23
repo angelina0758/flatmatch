@@ -105,6 +105,7 @@ export function MainApp() {
 
   // New account sign up modal state
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
   const [regType, setRegType] = useState<"seeker" | "tenant" | "owner">(
@@ -357,7 +358,7 @@ export function MainApp() {
   // Sync user info and load relative models
   const handleUserSwitch = async (userId: string, usersOverride?: User[]) => {
     const list = usersOverride || allUsers;
-    const selected = list.find((u) => u.id === userId);
+    const selected = list.find((u: User) => u.id === userId);
     if (!selected) return;
 
     try {
@@ -960,7 +961,7 @@ export function MainApp() {
       }
 
       // append straight to view for instant speed
-      setChatMessages((prev) => [...prev, data]);
+      setChatMessages((prev: Message[]) => [...prev, data]);
       setNewMessageText("");
       setAttachedMediaUrl("");
 
@@ -1180,16 +1181,26 @@ export function MainApp() {
         return;
       }
 
-      setShowRegisterModal(false);
-      // Reload matching system
-      await loadUsersDetails(data.user.id);
+      setAuthToken("session");
+      setCurrentUser(data.user);
+      setCurrentProfile(data.profile);
 
-      // Reset inputs
+      // Refresh data models
+      fetchConversations("session");
+      fetchSchedulesOfUser("session");
+      fetchListings();
+
+      // Reset inputs and state
       setRegName("");
       setRegEmail("");
       setRegPhone("");
+      setIsSignUpMode(false);
+      setShowRegisterModal(false);
+
+      // Redirect programmatically
+      navigate(`/dashboard/${data.user.user_type}`);
     } catch (e) {
-      console.error("Error conducting simulation onboarding.", e);
+      console.error("Error conducting registration.", e);
     }
   };
 
@@ -1307,6 +1318,69 @@ export function MainApp() {
     }
   };
 
+  // Adopt another user's preference details
+  const handleAdoptPreferences = async (targetProfile: UserProfile) => {
+    const token = authToken || "";
+    if (!currentUser || !token) return;
+
+    try {
+      const res = await fetch("/api/v1/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          bio: editBio,
+          age: editAge,
+          gender: editGender,
+          profession: editProfession,
+          smoker: targetProfile.smoker ?? editSmoker,
+          pets_allowed: targetProfile.pets_allowed ?? editPetsAllowed,
+          cleanliness_level: targetProfile.cleanliness_level ?? editCleanliness,
+          budget_min: targetProfile.budget_min ?? editBudgetMin,
+          budget_max: targetProfile.budget_max ?? editBudgetMax,
+          drinking: targetProfile.drinking ?? editDrinking,
+          sleeping_pattern: targetProfile.sleeping_pattern ?? editSleeping,
+          wfh_status: targetProfile.wfh_status ?? editWfh,
+          full_name: editFullName,
+          phone_number: editPhone,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setCurrentProfile(data.profile);
+        setCurrentUser(data.user);
+
+        // Prepopulate edit states locally
+        setEditSmoker(data.profile.smoker || false);
+        setEditPetsAllowed(data.profile.pets_allowed || false);
+        setEditCleanliness(data.profile.cleanliness_level || 3);
+        setEditBudgetMin(data.profile.budget_min || 500);
+        setEditBudgetMax(data.profile.budget_max || 2000);
+        setEditDrinking(data.profile.drinking || "socially");
+        setEditSleeping(data.profile.sleeping_pattern || "flexible");
+        setEditWfh(data.profile.wfh_status || "hybrid");
+
+        // Refresh registered users list
+        const resUsr = await fetch("/api/v1/auth/users");
+        const dataUsr = await resUsr.json();
+        setAllUsers(dataUsr);
+
+        // Refresh compatibility matches
+        loadCompatibilityMatches();
+
+        alert("Success! Your matching preferences have been updated to match this user's profile details.");
+      } else {
+        alert("Failed to update preferences matrix.");
+      }
+    } catch (e) {
+      console.error("Error adopting preferences", e);
+      alert("Network error updating preferences.");
+    }
+  };
+
   // Perform Bulk csv or bulk json upload
   const handleBulkUpload = async () => {
     if (!currentUser) return;
@@ -1319,7 +1393,7 @@ export function MainApp() {
         parsedData = JSON.parse(cleaned);
       } else {
         // Simple manual CSV parser mapping columns
-        const lines = bulkInput.split("\n").filter((l) => l.trim() !== "");
+        const lines = bulkInput.split("\n").filter((l: string) => l.trim() !== "");
         if (lines.length < 2) {
           throw new Error(
             "Invalid CSV format. Need header and at least 1 record row.",
@@ -1330,9 +1404,9 @@ export function MainApp() {
         // We'll strip surrounding quotes if present
         const headers = lines[0]
           .split(",")
-          .map((h) => h.trim().replace(/^["']|["']$/g, ""));
+          .map((h: string) => h.trim().replace(/^["']|["']$/g, ""));
 
-        parsedData = lines.slice(1).map((line) => {
+        parsedData = lines.slice(1).map((line: string) => {
           // Robust regex to split commas but ignore commas inside quoted segments
           const cells: string[] = [];
           let currentStr = "";
@@ -1352,7 +1426,7 @@ export function MainApp() {
           cells.push(currentStr.trim().replace(/^["']|["']$/g, ""));
 
           const item: any = {};
-          headers.forEach((header, index) => {
+          headers.forEach((header: string, index: number) => {
             item[header] = cells[index] || "";
           });
           return item;
@@ -1425,7 +1499,7 @@ export function MainApp() {
         <div className="w-[1024px] h-[768px] bg-[#E4E3E0] text-[#141414] font-sans overflow-hidden flex flex-col justify-center items-center border-[8px] border-[#141414] mx-auto relative shadow-2xl">
           <div className="text-center mb-8">
             <span className="inline-block font-extrabold tracking-tighter text-3xl bg-[#141414] text-white px-6 py-2 border-2 border-[#141414] uppercase shadow-[4px_4px_0px_#FAF9F5]">
-              🏢 FLATMATCH PORTAL
+              🏢 FLATMATCH
             </span>
             <p className="text-xs font-serif italic text-neutral-600 mt-3 font-bold">
               Roommate Compatibility Matrix & Smart Real-Estate Discovery (India
@@ -1529,10 +1603,10 @@ export function MainApp() {
         <div className="w-[450px] bg-white border-4 border-[#141414] p-8 shadow-[8px_8px_0px_#141414]">
           <div className="text-center mb-6">
             <span className="inline-block font-extrabold tracking-tighter text-2xl bg-[#141414] text-white px-4 py-1.5 border-2 border-[#141414] uppercase">
-              FLATMATCH // SECURE
+              FLATMATCH // {isSignUpMode ? "REGISTER" : "SECURE"}
             </span>
             <p className="text-xs font-serif italic text-neutral-600 mt-2 font-semibold">
-              Authenticated Portal: {entryRole.toUpperCase()}
+              {isSignUpMode ? `Create Account: ${entryRole.toUpperCase()}` : `Authenticated Portal: ${entryRole.toUpperCase()}`}
             </p>
           </div>
 
@@ -1570,162 +1644,211 @@ export function MainApp() {
             </div>
           )}
 
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              setLoginLoading(true);
-              setLoginError(null);
-              try {
-                const res = await fetch("/api/v1/auth/login", {
-                  method: "POST",
-                  credentials: "include",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    email: loginEmail,
-                    password: loginPassword,
-                  }),
-                });
-                const reply = await res.json();
-                if (res.ok) {
-                  // Assert role restriction on login!
-                  if (reply.user.user_type !== entryRole) {
-                    throw new Error(
-                      `This account is registered as an ${reply.user.user_type.toUpperCase()}. You are attempting to log in to the ${entryRole.toUpperCase()} portal. Access denied.`,
-                    );
+          {!isSignUpMode ? (
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setLoginLoading(true);
+                setLoginError(null);
+                try {
+                  const res = await fetch("/api/v1/auth/login", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      email: loginEmail,
+                      password: loginPassword,
+                    }),
+                  });
+                  const reply = await res.json();
+                  if (res.ok) {
+                    // Assert role restriction on login!
+                    if (reply.user.user_type !== entryRole) {
+                      throw new Error(
+                        `This account is registered as an ${reply.user.user_type.toUpperCase()}. You are attempting to log in to the ${entryRole.toUpperCase()} portal. Access denied.`,
+                      );
+                    }
+
+                    setAuthToken("session");
+                    setCurrentUser(reply.user);
+                    setCurrentProfile(reply.profile);
+
+                    // Refresh data models
+                    fetchConversations("session");
+                    fetchSchedulesOfUser("session");
+                    fetchListings();
+
+                    // Prepopulate inputs
+                    if (reply.profile) {
+                      setEditBio(reply.profile.bio || "");
+                      setEditAge(reply.profile.age || 25);
+                      setEditGender(reply.profile.gender || "Not Specified");
+                      setEditProfession(
+                        reply.profile.profession || "Professional",
+                      );
+                      setEditSmoker(reply.profile.smoker || false);
+                      setEditPetsAllowed(reply.profile.pets_allowed || false);
+                      setEditCleanliness(reply.profile.cleanliness_level || 3);
+                      setEditBudgetMin(reply.profile.budget_min || 500);
+                      setEditBudgetMax(reply.profile.budget_max || 2000);
+                      setEditDrinking(reply.profile.drinking || "socially");
+                      setEditSleeping(
+                        reply.profile.sleeping_pattern || "flexible",
+                      );
+                      setEditWfh(reply.profile.wfh_status || "hybrid");
+                      setEditFullName(reply.user.full_name || "");
+                      setEditPhone(reply.user.phone_number || "");
+                    }
+
+                    // Redirect programmatically
+                    navigate(`/dashboard/${reply.user.user_type}`);
+                  } else {
+                    setLoginError(reply.error || "Authentication denied.");
                   }
-
-                  setAuthToken("session");
-                  setCurrentUser(reply.user);
-                  setCurrentProfile(reply.profile);
-
-                  // Refresh data models
-                  fetchConversations("session");
-                  fetchSchedulesOfUser("session");
-                  fetchListings();
-
-                  // Prepopulate inputs
-                  if (reply.profile) {
-                    setEditBio(reply.profile.bio || "");
-                    setEditAge(reply.profile.age || 25);
-                    setEditGender(reply.profile.gender || "Not Specified");
-                    setEditProfession(
-                      reply.profile.profession || "Professional",
-                    );
-                    setEditSmoker(reply.profile.smoker || false);
-                    setEditPetsAllowed(reply.profile.pets_allowed || false);
-                    setEditCleanliness(reply.profile.cleanliness_level || 3);
-                    setEditBudgetMin(reply.profile.budget_min || 500);
-                    setEditBudgetMax(reply.profile.budget_max || 2000);
-                    setEditDrinking(reply.profile.drinking || "socially");
-                    setEditSleeping(
-                      reply.profile.sleeping_pattern || "flexible",
-                    );
-                    setEditWfh(reply.profile.wfh_status || "hybrid");
-                    setEditFullName(reply.user.full_name || "");
-                    setEditPhone(reply.user.phone_number || "");
-                  }
-
-                  // Redirect programmatically
-                  navigate(`/dashboard/${reply.user.user_type}`);
-                } else {
-                  setLoginError(reply.error || "Authentication denied.");
+                } catch (err: any) {
+                  setLoginError(err.message || "Server connection failed.");
+                } finally {
+                  setLoginLoading(false);
                 }
-              } catch (err: any) {
-                setLoginError(err.message || "Server connection failed.");
-              } finally {
-                setLoginLoading(false);
-              }
-            }}
-            className="space-y-4"
-          >
-            <div>
-              <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
-                Account Email Address ({entryRole.toUpperCase()})
-              </label>
-              <input
-                type="email"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-                className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
-                placeholder={`e.g. ${entryRole}.alex@example.com`}
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
-                Account Secure Password
-              </label>
-              <input
-                type="password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
-                placeholder="••••••••••••"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loginLoading}
-              className="w-full bg-[#D2F57C] hover:bg-[#b8da64] text-xs font-mono font-bold py-2.5 border-2 border-[#141414] uppercase tracking-wider shadow-[4px_4px_0px_#141414] active:shadow-none translate-y-0 active:translate-y-[2px] transition-all cursor-pointer flex justify-center items-center gap-2"
-            >
-              {loginLoading
-                ? "Negotiating Access..."
-                : "Authenticate Credentials"}
-            </button>
-          </form>
-
-          {/* Quick Simulation Account Selector */}
-          <div className="mt-6 border-t-2 border-dashed border-[#141414] pt-4">
-            <span className="block text-[9px] font-mono font-bold opacity-75 uppercase tracking-wider text-center mb-2">
-              ⚠️ Developer / Reviewer Simulator Tool
-            </span>
-            <div className="flex flex-col gap-1.5 bg-[#FAF9F5] p-3 border-2 border-[#141414]">
-              <span className="block text-[9px] font-mono leading-none font-medium text-neutral-600 mb-1">
-                Select a seed {entryRole.toUpperCase()} profile to
-                auto-authenticate:
-              </span>
-              <select
-                onChange={async (e) => {
-                  const val = e.target.value;
-                  if (!val) return;
-                  const chosen = allUsers.find((u) => u.id === val);
-                  if (chosen) {
-                    setLoginEmail(chosen.email);
-                    setLoginPassword("");
-                  }
-                }}
-                className="text-xs font-mono bg-white border-2 border-[#141414] px-2 py-1 outline-none rounded-none cursor-pointer"
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  -- Select Quick Login Shortcut --
-                </option>
-                {allUsers
-                  .filter((u) => u.user_type === entryRole)
-                  .map((u) => (
-                    <option key={u.id} value={u.id}>
-                      {u.full_name} ({u.user_type.toUpperCase()})
-                    </option>
-                  ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="mt-4 text-center flex flex-col gap-2">
-            <button
-              onClick={() => {
-                setRegType(entryRole);
-                setShowRegisterModal(true);
               }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
+                  Account Email Address ({entryRole.toUpperCase()})
+                </label>
+                <input
+                  type="email"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
+                  placeholder={`e.g. ${entryRole}.alex@example.com`}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
+                  Account Secure Password
+                </label>
+                <input
+                  type="password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
+                  placeholder="••••••••••••"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loginLoading}
+                className="w-full bg-[#D2F57C] hover:bg-[#b8da64] text-xs font-mono font-bold py-2.5 border-2 border-[#141414] uppercase tracking-wider shadow-[4px_4px_0px_#141414] active:shadow-none translate-y-0 active:translate-y-[2px] transition-all cursor-pointer flex justify-center items-center gap-2"
+              >
+                {loginLoading
+                  ? "Negotiating Access..."
+                  : "Authenticate Credentials"}
+              </button>
+            </form>
+          ) : (
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setLoginLoading(true);
+                setLoginError(null);
+                try {
+                  await handleRegisterUser(e);
+                } catch (err: any) {
+                  setLoginError(err.message || "Registration failed.");
+                } finally {
+                  setLoginLoading(false);
+                }
+              }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="full_name"
+                  value={regName}
+                  onChange={(e) => setRegName(e.target.value)}
+                  className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
+                  placeholder="e.g. Alex Johnson"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={regEmail}
+                  onChange={(e) => setRegEmail(e.target.value)}
+                  className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
+                  placeholder={`e.g. ${entryRole}@example.com`}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
+                  Account Secure Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
+                  placeholder="••••••••••••"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#141414]">
+                  Indian Mobile Number (with +91)
+                </label>
+                <input
+                  type="text"
+                  name="phone_number"
+                  value={regPhone}
+                  onChange={(e) => setRegPhone(e.target.value)}
+                  className="w-full border-2 border-[#141414] p-2 text-xs bg-[#F5F5F3] outline-none hover:bg-neutral-50 focus:bg-white rounded-none leading-none"
+                  placeholder="+919876543210"
+                  required
+                />
+              </div>
+
+              <input type="hidden" name="user_type" value={entryRole} />
+
+              <button
+                type="submit"
+                disabled={loginLoading}
+                className="w-full bg-[#D2F57C] hover:bg-[#b8da64] text-xs font-mono font-bold py-2.5 border-2 border-[#141414] uppercase tracking-wider shadow-[4px_4px_0px_#141414] active:shadow-none translate-y-0 active:translate-y-[2px] transition-all cursor-pointer flex justify-center items-center gap-2"
+              >
+                {loginLoading ? "Creating Account..." : "Register & Sign In"}
+              </button>
+            </form>
+          )}
+
+          <div className="mt-6 text-center flex flex-col gap-2 border-t-2 border-dashed border-[#141414] pt-4">
+            <button
+              onClick={() => setIsSignUpMode(!isSignUpMode)}
               className="text-[11px] font-serif italic text-neutral-600 hover:text-[#141414] underline cursor-pointer"
             >
-              Do not have an account? Register simulation profile
+              {!isSignUpMode ? "Do not have an account? Register here" : "Already have an account? Sign In here"}
             </button>
             <button
-              onClick={() => setEntryRole(null)}
+              onClick={() => {
+                setEntryRole(null);
+                setIsSignUpMode(false);
+              }}
               className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-500 hover:text-[#141414] mt-2 flex items-center justify-center gap-1 cursor-pointer"
             >
               ← Back to role portals
@@ -1968,33 +2091,36 @@ export function MainApp() {
           </nav>
         </div>
 
-        {/* SIMULATOR SWITCH TOOL */}
+        {/* LOGGED IN USER BADGE */}
         <div className="flex items-center gap-3 border-l border-[#141414] pl-4 h-full py-1">
           <div className="text-right">
-            <div className="text-[9px] font-mono opacity-50 uppercase tracking-widest leading-none">
-              Simulation Role
+            <div className="text-xs font-bold text-[#141414]">
+              {currentUser?.full_name}
             </div>
-            <select
-              value={currentUser?.id || ""}
-              onChange={(e) => handleUserSwitch(e.target.value)}
-              className="text-xs font-bold bg-[#F5F5F3] border border-[#141414] px-2 py-0.5 outline-none rounded-none cursor-pointer"
-            >
-              {allUsers
-                .filter((u) => u.user_type === currentUser?.user_type)
-                .map((u) => (
-                  <option key={u.id} value={u.id}>
-                    {u.full_name} ({u.user_type.toUpperCase()})
-                  </option>
-                ))}
-            </select>
+            <div className="text-[9px] font-mono opacity-50 uppercase tracking-widest leading-none mt-0.5">
+              {currentUser?.user_type}
+            </div>
           </div>
-
+          <div className="w-8 h-8 rounded-full border border-[#141414] bg-[#D2F57C] text-xs font-mono font-bold flex items-center justify-center">
+            {currentUser?.full_name?.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase() || "U"}
+          </div>
           <button
-            onClick={() => setShowRegisterModal(true)}
-            title="Register custom seeker/owner/tenant profile"
-            className="p-1 px-1.5 border border-[#141414] bg-[#D2F57C] hover:bg-[#b8da64] transition-colors active:translate-y-[1px]"
+            onClick={async () => {
+              try {
+                await fetch("/api/v1/auth/logout", {
+                  method: "POST",
+                });
+                setAuthToken("");
+                setCurrentUser(null);
+                setCurrentProfile(null);
+                navigate("/login");
+              } catch (e) {
+                console.error("Logout failed", e);
+              }
+            }}
+            className="text-[9px] font-mono font-bold uppercase tracking-wider text-zinc-500 hover:text-red-650 cursor-pointer ml-2 border border-[#141414] px-1.5 py-1 bg-white hover:bg-neutral-100 transition-colors"
           >
-            <Plus className="w-3.5 h-3.5" />
+            Logout
           </button>
         </div>
       </header>
@@ -2166,7 +2292,6 @@ export function MainApp() {
                             {l.is_verified && (
                               <ShieldCheck
                                 className="w-3.5 h-3.5 text-green-600 shrink-0 inline"
-                                title="FlatMatch Verified Stay"
                               />
                             )}
                             <span className="truncate">{l.title}</span>
@@ -2818,50 +2943,59 @@ export function MainApp() {
                             </div>
                           </div>
 
-                          <div className="p-3 border border-[#141414] bg-[#D2F57C]/10">
-                            <div className="text-[9px] font-mono text-[#141414]/70 uppercase mb-1 font-bold">
-                              Their Preference Profile
+                          <div className="p-3 border border-[#141414] bg-[#D2F57C]/10 flex flex-col justify-between">
+                            <div>
+                              <div className="text-[9px] font-mono text-[#141414]/70 uppercase mb-1 font-bold">
+                                Their Preference Profile
+                              </div>
+                              <div className="space-y-1 text-xs">
+                                <div>
+                                  <span className="opacity-50">
+                                    Tidiness Level:
+                                  </span>{" "}
+                                  <strong>
+                                    {selectedMatch.profile.cleanliness_level}/5
+                                  </strong>
+                                </div>
+                                <div>
+                                  <span className="opacity-50">Pet Policy:</span>{" "}
+                                  <strong>
+                                    {selectedMatch.profile.pets_allowed
+                                      ? "Allowed"
+                                      : "Prohibited"}
+                                  </strong>
+                                </div>
+                                <div>
+                                  <span className="opacity-50">Smoking:</span>{" "}
+                                  <strong>
+                                    {selectedMatch.profile.smoker
+                                      ? "Smokes"
+                                      : "No smoke"}
+                                  </strong>
+                                </div>
+                                <div>
+                                  <span className="opacity-50">
+                                    Budget Limit:
+                                  </span>{" "}
+                                  <strong>{`${formatPrice(selectedMatch.profile.budget_min)} - ${formatPrice(selectedMatch.profile.budget_max)}`}</strong>
+                                </div>
+                                <div>
+                                  <span className="opacity-50">
+                                    Workspace Status:
+                                  </span>{" "}
+                                  <strong className="uppercase">
+                                    {selectedMatch.profile.wfh_status}
+                                  </strong>
+                                </div>
+                              </div>
                             </div>
-                            <div className="space-y-1 text-xs">
-                              <div>
-                                <span className="opacity-50">
-                                  Tidiness Level:
-                                </span>{" "}
-                                <strong>
-                                  {selectedMatch.profile.cleanliness_level}/5
-                                </strong>
-                              </div>
-                              <div>
-                                <span className="opacity-50">Pet Policy:</span>{" "}
-                                <strong>
-                                  {selectedMatch.profile.pets_allowed
-                                    ? "Allowed"
-                                    : "Prohibited"}
-                                </strong>
-                              </div>
-                              <div>
-                                <span className="opacity-50">Smoking:</span>{" "}
-                                <strong>
-                                  {selectedMatch.profile.smoker
-                                    ? "Smokes"
-                                    : "No smoke"}
-                                </strong>
-                              </div>
-                              <div>
-                                <span className="opacity-50">
-                                  Budget Limit:
-                                </span>{" "}
-                                <strong>{`${formatPrice(selectedMatch.profile.budget_min)} - ${formatPrice(selectedMatch.profile.budget_max)}`}</strong>
-                              </div>
-                              <div>
-                                <span className="opacity-50">
-                                  Workspace Status:
-                                </span>{" "}
-                                <strong className="uppercase">
-                                  {selectedMatch.profile.wfh_status}
-                                </strong>
-                              </div>
-                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleAdoptPreferences(selectedMatch.profile)}
+                              className="mt-3 w-full bg-[#141414] text-white hover:bg-neutral-800 text-[9px] font-mono uppercase tracking-wider py-1.5 border border-[#141414] cursor-pointer text-center font-bold shadow-[2px_2px_0px_rgba(0,0,0,0.2)] hover:translate-y-[-0.5px] transition-all"
+                            >
+                              Adopt Preferences
+                            </button>
                           </div>
                         </div>
 
@@ -4479,99 +4613,7 @@ export function MainApp() {
         </div>
       </footer>
 
-      {/* MODAL 1: REGISTER NEW SIMULATION PROFILE */}
-      {showRegisterModal && (
-        <div className="absolute inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-          <div className="bg-white border-4 border-[#141414] max-w-sm w-full p-6 shadow-[8px_8px_0px_#141414] relative animate-in fade-in zoom-in duration-150">
-            <button
-              onClick={() => setShowRegisterModal(false)}
-              className="absolute top-3 right-3 text-[#141414] hover:text-zinc-600 outline-none"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="pb-2 border-b border-[#141414] mb-4">
-              <h3 className="font-serif italic text-sm font-bold uppercase tracking-tight">
-                Onboard Simulation Member
-              </h3>
-              <p className="text-[8.5px] font-mono opacity-50 uppercase">
-                Initialize brand new profile context logs
-              </p>
-            </div>
 
-            <form onSubmit={handleRegisterUser} className="space-y-3.5 text-xs">
-              <div>
-                <label className="block text-[9px] font-mono font-bold uppercase mb-1">
-                  Full Member Name
-                </label>
-                <input
-                  type="text"
-                  value={regName}
-                  onChange={(e) => setRegName(e.target.value)}
-                  placeholder="e.g. Rachel Green"
-                  className="w-full border border-[#141414] p-2 bg-[#F5F5F3] outline-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-[9px] font-mono font-bold uppercase mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={regEmail}
-                  onChange={(e) => setRegEmail(e.target.value)}
-                  placeholder="rachel@flatmatch.com"
-                  className="w-full border border-[#141414] p-2 bg-[#F5F5F3] outline-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-[9px] font-mono font-bold uppercase mb-1">
-                  Desired User Account Role
-                </label>
-                <div className="grid grid-cols-3 gap-1">
-                  {[
-                    { key: "seeker", label: "Seeker" },
-                    { key: "tenant", label: "Tenant" },
-                    { key: "owner", label: "Prop Boss" },
-                  ].map((r) => (
-                    <button
-                      key={r.key}
-                      type="button"
-                      onClick={() => setRegType(r.key as any)}
-                      className={`text-[9px] font-bold py-1 border border-[#141414] uppercase ${regType === r.key ? "bg-[#141414] text-white" : "bg-white text-[#141414]"}`}
-                    >
-                      {r.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[9px] font-mono font-bold uppercase mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  value={regPhone}
-                  onChange={(e) => setRegPhone(e.target.value)}
-                  placeholder="+1 (555) 777-8899"
-                  className="w-full border border-[#141414] p-2 bg-[#F5F5F3] outline-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-[#D2F57C] hover:bg-[#c3e66a] text-[#141414] py-2.5 border-2 border-[#141414] uppercase text-[10px] font-black tracking-widest shadow-[3px_3px_0px_#141414] cursor-pointer"
-              >
-                Register & Load Context
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
 
       {/* MODAL 2: PUBLISH STAY/UNIT LISTINGS */}
       {showNewListingModal && (

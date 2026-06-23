@@ -95,6 +95,7 @@ export interface Message {
   receiver_id: string;
   message_text: string;
   sent_at: string;
+  media_url?: string;
 }
 
 export interface Conversation {
