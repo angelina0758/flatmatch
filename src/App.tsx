@@ -1371,7 +1371,9 @@ export function MainApp() {
         // Refresh compatibility matches
         loadCompatibilityMatches();
 
-        alert("Success! Your matching preferences have been updated to match this user's profile details.");
+        alert(
+          "Success! Your matching preferences have been updated to match this user's profile details.",
+        );
       } else {
         alert("Failed to update preferences matrix.");
       }
@@ -1393,7 +1395,9 @@ export function MainApp() {
         parsedData = JSON.parse(cleaned);
       } else {
         // Simple manual CSV parser mapping columns
-        const lines = bulkInput.split("\n").filter((l: string) => l.trim() !== "");
+        const lines = bulkInput
+          .split("\n")
+          .filter((l: string) => l.trim() !== "");
         if (lines.length < 2) {
           throw new Error(
             "Invalid CSV format. Need header and at least 1 record row.",
@@ -1502,8 +1506,7 @@ export function MainApp() {
               🏢 FLATMATCH
             </span>
             <p className="text-xs font-serif italic text-neutral-600 mt-3 font-bold">
-              Roommate Compatibility Matrix & Smart Real-Estate Discovery (India
-              Localization)
+              Roommate Compatibility Matrix & Smart Real-Estate Discovery
             </p>
           </div>
 
@@ -1606,7 +1609,9 @@ export function MainApp() {
               FLATMATCH // {isSignUpMode ? "REGISTER" : "SECURE"}
             </span>
             <p className="text-xs font-serif italic text-neutral-600 mt-2 font-semibold">
-              {isSignUpMode ? `Create Account: ${entryRole.toUpperCase()}` : `Authenticated Portal: ${entryRole.toUpperCase()}`}
+              {isSignUpMode
+                ? `Create Account: ${entryRole.toUpperCase()}`
+                : `Authenticated Portal: ${entryRole.toUpperCase()}`}
             </p>
           </div>
 
@@ -1842,7 +1847,9 @@ export function MainApp() {
               onClick={() => setIsSignUpMode(!isSignUpMode)}
               className="text-[11px] font-serif italic text-neutral-600 hover:text-[#141414] underline cursor-pointer"
             >
-              {!isSignUpMode ? "Do not have an account? Register here" : "Already have an account? Sign In here"}
+              {!isSignUpMode
+                ? "Do not have an account? Register here"
+                : "Already have an account? Sign In here"}
             </button>
             <button
               onClick={() => {
@@ -2102,7 +2109,12 @@ export function MainApp() {
             </div>
           </div>
           <div className="w-8 h-8 rounded-full border border-[#141414] bg-[#D2F57C] text-xs font-mono font-bold flex items-center justify-center">
-            {currentUser?.full_name?.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase() || "U"}
+            {currentUser?.full_name
+              ?.split(" ")
+              .map((n) => n[0])
+              .join("")
+              .substring(0, 2)
+              .toUpperCase() || "U"}
           </div>
           <button
             onClick={async () => {
@@ -2290,9 +2302,7 @@ export function MainApp() {
                         <div className="pr-1 overflow-hidden">
                           <div className="text-xs font-black leading-snug truncate flex items-center gap-1">
                             {l.is_verified && (
-                              <ShieldCheck
-                                className="w-3.5 h-3.5 text-green-600 shrink-0 inline"
-                              />
+                              <ShieldCheck className="w-3.5 h-3.5 text-green-600 shrink-0 inline" />
                             )}
                             <span className="truncate">{l.title}</span>
                           </div>
@@ -2958,7 +2968,9 @@ export function MainApp() {
                                   </strong>
                                 </div>
                                 <div>
-                                  <span className="opacity-50">Pet Policy:</span>{" "}
+                                  <span className="opacity-50">
+                                    Pet Policy:
+                                  </span>{" "}
                                   <strong>
                                     {selectedMatch.profile.pets_allowed
                                       ? "Allowed"
@@ -2991,7 +3003,9 @@ export function MainApp() {
                             </div>
                             <button
                               type="button"
-                              onClick={() => handleAdoptPreferences(selectedMatch.profile)}
+                              onClick={() =>
+                                handleAdoptPreferences(selectedMatch.profile)
+                              }
                               className="mt-3 w-full bg-[#141414] text-white hover:bg-neutral-800 text-[9px] font-mono uppercase tracking-wider py-1.5 border border-[#141414] cursor-pointer text-center font-bold shadow-[2px_2px_0px_rgba(0,0,0,0.2)] hover:translate-y-[-0.5px] transition-all"
                             >
                               Adopt Preferences
@@ -4612,8 +4626,6 @@ export function MainApp() {
           &copy; 2026 FLATMATCH SaaS PLATFORM INC. // ALL RIGHTS SECURED
         </div>
       </footer>
-
-
 
       {/* MODAL 2: PUBLISH STAY/UNIT LISTINGS */}
       {showNewListingModal && (
